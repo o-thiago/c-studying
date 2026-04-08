@@ -5,10 +5,10 @@
 
 constexpr int CNH_LENGTH = 12;
 
-unsigned int multa(char cnh_number[CNH_LENGTH], double car_velocity,
-                   double max_velocity) {
+unsigned int multa(const char cnh_number[CNH_LENGTH], const double car_velocity,
+                   const double max_velocity) {
     unsigned int fine_value = 0;
-    unsigned char lost_points = 0, overtake_step = 0;
+    char lost_points = 0, overtake_step = 0;
 
     if (car_velocity > max_velocity * 1.5) {
         fine_value = 87462;
@@ -44,13 +44,13 @@ unsigned int multa(char cnh_number[CNH_LENGTH], double car_velocity,
     return fine_value;
 }
 
-char* read_value(char buffer[], int buffer_size, char message[]) {
+char* read_value(char buffer[], const int buffer_size, const char message[]) {
     fputs(message, stdout);
     fflush(stdout);
     return fgets(buffer, buffer_size, stdin);
 }
 
-char* read_double(char buffer[], char message[], double* ptr) {
+char* read_double(char buffer[], const char message[], double* ptr) {
     char* return_value = read_value(buffer, BUFSIZ, message);
 
     if (return_value)
@@ -61,19 +61,13 @@ char* read_double(char buffer[], char message[], double* ptr) {
     return return_value;
 }
 
-bool validate_cnh(char cnh_number[CNH_LENGTH]) {
-    if (strlen(cnh_number) != CNH_LENGTH - 1) {
-        printf("A CNH precisa ter necessariamente %d caracteres!\n",
-               CNH_LENGTH - 1);
-        return false;
-    }
+bool is_cnh_correct_length(const char cnh_number[CNH_LENGTH]) {
+    return strlen(cnh_number) == CNH_LENGTH - 1;
+}
 
-    for (int i = 0; i < CNH_LENGTH - 1; ++i)
-        if (!isdigit(cnh_number[i])) {
-            puts("A CNH precisa ser composta inteiramente por digitos!");
-            return false;
-        }
-
+bool is_cnh_numeric(const char cnh_number[CNH_LENGTH]) {
+    for (int i = 0; cnh_number[i] != '\0'; ++i)
+        if (!isdigit(cnh_number[i])) return false;
     return true;
 }
 
@@ -93,17 +87,35 @@ int main(void) {
             continue;
         }
 
-        // Usuário ainda pode digitar '\n' no caso da input 0 ou outros que não
-        // atingem o limite do buffer. Então removemos o '\n' pois ele não deve
-        // ser armazenado.
-        cnh_number[strcspn(cnh_number, "\n")] = '\0';
+        bool cnh_number_overflowed = false;
+        char* optional_cnh_number_new_line_char = strchr(cnh_number, '\n');
+
+        // Usuário ainda pode digitar '\n' no caso da input 0 ou outros que
+        // não atingem o limite do buffer. Então removemos o '\n' pois ele
+        // não deve ser armazenado.
+        if (optional_cnh_number_new_line_char)
+            *optional_cnh_number_new_line_char = '\0';
+        else {
+            int next = getchar();
+            if (next != '\n' && next != EOF) {
+                cnh_number_overflowed = true;
+
+                // Consumimos os caracteres que fizeram overflow no buffer.
+                flush_in();
+            }
+        }
 
         if (strcmp(cnh_number, "0") == 0) break;
+        if (!is_cnh_correct_length(cnh_number) || cnh_number_overflowed) {
+            printf("A CNH precisa ter necessariamente %d caracteres!\n",
+                   CNH_LENGTH - 1);
+            continue;
+        }
 
-        // Consumimos o '\n' que não foi armazenado no `cnh_number` mas ainda
-        // pode estar no stdin.
-        flush_in();
-        if (!validate_cnh(cnh_number)) continue;
+        if (!is_cnh_numeric(cnh_number)) {
+            puts("A CNH precisa ser composta inteiramente por digitos!");
+            continue;
+        };
 
         if (!read_double(buffer,
                          "Digite a velocidade do carro: ", &car_velocity))
