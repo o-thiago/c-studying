@@ -11,6 +11,7 @@ enum ReadState {
     AlmostComment,
     InSingleLineComment,
     InMultilineComment,
+    AlmostEndMultilineComment,
     InChar,
     InString,
 };
@@ -19,7 +20,8 @@ enum ReadState {
 // Don’t forget to handle quoted strings and character constants properly. C
 // comments do not nest.
 int main() {
-    int cur_c, prev_c = 0;
+    int cur_c;
+    bool escaped = false;
     enum ReadState current_state = Normal;
 
     while ((cur_c = getchar()) != EOF) {
@@ -51,7 +53,9 @@ int main() {
                         current_state = Normal;
 
                         putchar(SLASH);
-                        putchar(cur_c);
+                        ungetc(cur_c, stdin);
+
+                        continue;
                 }
                 break;
             case InSingleLineComment:
@@ -61,23 +65,27 @@ int main() {
                 };
                 break;
             case InMultilineComment:
-                if (cur_c == SLASH && prev_c == STAR) {
-                    current_state = Normal;
+                if (cur_c == STAR) {
+                    current_state = AlmostEndMultilineComment;
                 }
                 break;
-            case InChar:
-                putchar(cur_c);
-                if (cur_c == CHAR_MARKER && prev_c != '\\')
+            case AlmostEndMultilineComment:
+                if (cur_c == '/')
                     current_state = Normal;
-                break;
+                else if (cur_c != '*')
+                    current_state = InMultilineComment;
+            case InChar:
             case InString:
                 putchar(cur_c);
-                if (cur_c == STRING_MARKER && prev_c != '\\')
+                if (escaped)
+                    escaped = false;
+                else if (cur_c == '\\')
+                    escaped = true;
+                else if ((current_state == InChar && cur_c == CHAR_MARKER) ||
+                         (current_state == InString && cur_c == STRING_MARKER))
                     current_state = Normal;
                 break;
         }
-
-        prev_c = cur_c;
     }
 
     if (current_state == AlmostComment) putchar(SLASH);
