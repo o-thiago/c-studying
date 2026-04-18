@@ -74,6 +74,7 @@ int main() {
                     current_state = Normal;
                 else if (cur_c != '*')
                     current_state = InMultilineComment;
+                break;
             case InChar:
             case InString:
                 putchar(cur_c);
