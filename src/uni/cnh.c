@@ -91,8 +91,8 @@ int main(void) {
         char* optional_cnh_number_new_line_char = strchr(cnh_number, '\n');
 
         // Usuário ainda pode digitar '\n' no caso da input 0 ou outros que
-        // não atingem o limite do buffer. Então removemos o '\n' pois ele
-        // não deve ser armazenado.
+        // não atingem o limite do buffer. Então substituimos o '\n' pelo
+        // caractére de fim de string.
         if (optional_cnh_number_new_line_char)
             *optional_cnh_number_new_line_char = '\0';
         else {
