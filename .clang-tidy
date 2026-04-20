@@ -1,1 +1,12 @@
 ExtraArgs: ["-std=c23"]
+WarningsAsErrors: "*"
+Checks: >
+  clang-analyzer-*,
+  bugprone-*,
+  performance-*,
+  portability-*,
+  -readability-*,
+  -llvm-*,
+  -fuchsia-*,
+  -zircon-*,
+  -bugprone-easily-swappable-parameters

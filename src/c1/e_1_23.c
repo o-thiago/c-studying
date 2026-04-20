@@ -37,6 +37,8 @@ int main() {
                     case STRING_MARKER:
                         current_state = InString;
                         break;
+                    default:
+                        break;
                 }
 
                 putchar(cur_c);

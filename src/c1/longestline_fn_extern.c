@@ -32,9 +32,9 @@ int getline(void) {
 
     for (i = 0; i < MAX_INPUT_SIZE - 1 && ((c = getchar()) != EOF && c != '\n');
          i++)
-        current_line[i] = c;
+        current_line[i] = (char)c;
 
-    if (c == '\n') current_line[i++] = c;
+    if (c == '\n') current_line[i++] = (char)c;
 
     current_line[i] = '\0';
 

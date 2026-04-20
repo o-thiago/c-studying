@@ -12,11 +12,13 @@ int main() {
     int c;
     char* replacing_char;
 
-    while ((c = getchar()) != EOF)
-        if ((replacing_char = get_replacing_char(c)) != NULL)
+    while ((c = getchar()) != EOF) {
+        replacing_char = get_replacing_char(c);
+        if (replacing_char != NULL)
             fputs(replacing_char, stdout);
         else
             putchar(c);
+    }
 
     return EXIT_SUCCESS;
 }

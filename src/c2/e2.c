@@ -9,7 +9,7 @@ int htoi(char* str) {
     if (str[0] == '0' && toupper(str[1]) == 'X') i = 2;
     for (; str[i] != '\0'; ++i) {
         if (!isxdigit(str[i])) break;
-        char c = toupper(str[i]);
+        int c = toupper(str[i]);
         int digit = isdigit(c) ? c - '0' : (c - 'A' + 10);
         res = (res * 16) + digit;
     }

@@ -2,14 +2,15 @@
 #include <stdlib.h>
 
 void squeeze(char* s1, char* s2) {
-    unsigned int i, k;
+    unsigned i, k;
     for (i = k = 0; s1[i] != '\0'; ++i) {
         bool must_delete = false;
-        for (unsigned int j = 0; s2[j] != '\0'; ++j)
+        for (unsigned int j = 0; s2[j] != '\0'; ++j) {
             if (s1[i] == s2[j]) {
                 must_delete = true;
                 break;
             }
+        }
         if (!must_delete) {
             s1[k++] = s1[i];
         }
