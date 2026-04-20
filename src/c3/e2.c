@@ -24,48 +24,48 @@ char normal_char_to_special(char normal_char) {
 }
 
 void escape(char* s, char* t) {
-    unsigned i = 0;
-    for (char* ptr = s; *ptr != '\0'; ++ptr) {
-        switch (*ptr) {
+    while (*s) {
+        switch (*s) {
             case '\n':
             case '\t':
-                t[i++] = '\\';
-                t[i++] = special_char_to_normal(*ptr);
+                *t++ = '\\';
+                *t++ = special_char_to_normal(*s);
                 break;
             default:
-                t[i++] = *ptr;
+                *t++ = *s;
                 break;
         }
+        ++s;
     }
-    t[i++] = '\0';
+    *t = '\0';
 }
 
 void escape_rev(char* s, char* t) {
-    unsigned i = 0;
-    for (char* ptr = s; *ptr != '\0'; ++ptr) {
-        if (*ptr != '\\') {
-            t[i++] = *ptr;
+    while (*s) {
+        if (*s != '\\') {
+            *t++ = *s;
             continue;
         }
 
-        if (*(ptr + 1) == '\0') {
-            t[i] = '\\';
+        if (*(s + 1) == '\0') {
+            *t = '\\';
             break;
         }
 
-        switch (*(++ptr)) {
+        switch (*(++s)) {
             case 'n':
             case 't':
-                t[i++] = normal_char_to_special(*ptr);
+                *t++ = normal_char_to_special(*s);
                 break;
             default:
-                t[i++] = '\\';
-                t[i++] = *ptr;
+                *t++ = '\\';
+                *t++ = *s;
                 break;
         }
+        ++s;
     }
 
-    t[i++] = '\0';
+    *t = '\0';
 }
 
 // Write a function escape(s, t) that converts characters like newline and
