@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-constexpr int TAB_STOP = 4;
+static constexpr int TAB_STOP = 4;
 
 int main() {
-    int c, space_count = 0;
+    int c = 0;
+    int space_count = 0;
+
     while ((c = getchar()) != EOF) {
         if (c == ' ') {
             if (++space_count == TAB_STOP) {
@@ -12,8 +14,11 @@ int main() {
                 putchar('\t');
             }
         } else {
-            if (space_count != TAB_STOP)
-                while (space_count-- > 0) putchar(' ');
+            if (space_count != TAB_STOP) {
+                while (space_count-- > 0) {
+                    putchar(' ');
+                }
+            }
             space_count = 0;
             putchar(c);
         }

@@ -1,12 +1,19 @@
-ExtraArgs: ["-std=c23"]
-WarningsAsErrors: "*"
+ExtraArgs:
+  [
+    "-std=c23",
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic",
+    "-Wshadow",
+    "-Wformat=2",
+    "-Wstrict-prototypes",
+    "-Wold-style-definition",
+    "-Wmissing-prototypes",
+    "-Wwrite-strings",
+  ]
 Checks: >
-  clang-analyzer-*,
-  bugprone-*,
-  performance-*,
-  portability-*,
-  -readability-*,
-  -llvm-*,
-  -fuchsia-*,
-  -zircon-*,
+  *,
+  -readability-identifier-length,
+  -altera-*,
+  -llvmlibc-restrict-system-libc-headers,
   -bugprone-easily-swappable-parameters

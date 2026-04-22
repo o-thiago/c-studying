@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-constexpr int FOLD_MAX_WIDTH = 128;
+static constexpr int FOLD_MAX_WIDTH = 128;
 
 int main() {
-    int c, current_width = 0;
+    int c = 0;
+    int current_width = 0;
     while ((c = getchar()) != EOF) {
         putchar(c);
 

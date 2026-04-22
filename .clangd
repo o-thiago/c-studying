@@ -1,2 +1,14 @@
 CompileFlags:
-  Add: [-std=c23, -Wall, -Wextra]
+  Add:
+    [
+      -std=c23,
+      -Wall,
+      -Wextra,
+      -Wpedantic,
+      -Wshadow,
+      -Wformat=2,
+      -Wstrict-prototypes,
+      -Wold-style-definition,
+      -Wmissing-prototypes,
+      -Wwrite-strings,
+    ]

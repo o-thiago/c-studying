@@ -2,12 +2,15 @@
 #include <stdlib.h>
 
 int main() {
-    int c;
-    while ((c = getchar()) != EOF)
-        if (c == '\n')
+    int c = 0;
+
+    while ((c = getchar()) != EOF) {
+        if (c == '\n') {
             putchar(c);
-        else
+        } else {
             putchar((c == ' ' || c == '\t' || c == '\b') ? '\n' : '*');
+        }
+    }
 
     return EXIT_SUCCESS;
 }

@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void squeeze(char* s1, char* s2) {
-    unsigned i, k;
+static void squeeze(char* s1, const char* s2) {
+    unsigned i = 0;
+    unsigned k = 0;
+
     for (i = k = 0; s1[i] != '\0'; ++i) {
         bool must_delete = false;
         for (unsigned int j = 0; s2[j] != '\0'; ++j) {

@@ -2,16 +2,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int htoi(char* str) {
+static constexpr int HEX_BASE = 16;
+static constexpr int HEX_ALPHA_OFFSET = 10;
+
+static int htoi(const char* str) {
     unsigned int i = 0;
     int res = 0;
 
-    if (str[0] == '0' && toupper(str[1]) == 'X') i = 2;
+    if (str[0] == '0' && toupper(str[1]) == 'X') {
+        i = 2;
+    }
+
     for (; str[i] != '\0'; ++i) {
-        if (!isxdigit(str[i])) break;
+        if (!isxdigit(str[i])) {
+            break;
+        }
+
         int c = toupper(str[i]);
-        int digit = isdigit(c) ? c - '0' : (c - 'A' + 10);
-        res = (res * 16) + digit;
+        int digit = isdigit(c) ? c - '0' : (c - 'A' + HEX_ALPHA_OFFSET);
+        res = (res * HEX_BASE) + digit;
     }
 
     return res;

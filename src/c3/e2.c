@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char special_char_to_normal(char special_char) {
+static char special_char_to_normal(char special_char) {
     switch (special_char) {
         case '\n':
             return 'n';
@@ -12,7 +12,7 @@ char special_char_to_normal(char special_char) {
     }
 }
 
-char normal_char_to_special(char normal_char) {
+static char normal_char_to_special(char normal_char) {
     switch (normal_char) {
         case 'n':
             return '\n';
@@ -23,7 +23,7 @@ char normal_char_to_special(char normal_char) {
     }
 }
 
-void escape(char* s, char* t) {
+static void escape(char* s, char* t) {
     while (*s) {
         switch (*s) {
             case '\n':
@@ -40,7 +40,7 @@ void escape(char* s, char* t) {
     *t = '\0';
 }
 
-void escape_rev(char* s, char* t) {
+static void escape_rev(char* s, char* t) {
     while (*s) {
         if (*s != '\\') {
             *t++ = *s;
@@ -73,7 +73,8 @@ void escape_rev(char* s, char* t) {
 // t to s. Use a switch. Write a function for the other direction as well,
 // converting escape sequences into the real characters./
 int main(void) {
-    char from[BUFSIZ] = "abc\ndef\t", to[BUFSIZ];
+    char from[BUFSIZ] = "abc\ndef\t";
+    char to[BUFSIZ];
 
     escape(from, to);
     printf("Escaped: %s\n", to);

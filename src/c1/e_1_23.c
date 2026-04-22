@@ -1,10 +1,11 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-constexpr char SLASH = '/';
-constexpr char STAR = '*';
-constexpr char CHAR_MARKER = '\'';
-constexpr char STRING_MARKER = '"';
+static constexpr char SLASH = '/';
+static constexpr char STAR = '*';
+static constexpr char CHAR_MARKER = '\'';
+static constexpr char STRING_MARKER = '"';
 
 enum ReadState {
     Normal,
@@ -16,82 +17,113 @@ enum ReadState {
     InString,
 };
 
-// Exercise 1-23. Write a program to remove all comments from a C program.
-// Don’t forget to handle quoted strings and character constants properly. C
-// comments do not nest.
-int main() {
-    int cur_c;
+static void handle_normal(int c, enum ReadState* state) {
+    if (c == SLASH) {
+        *state = AlmostComment;
+        return;
+    }
+    if (c == CHAR_MARKER) {
+        *state = InChar;
+    } else if (c == STRING_MARKER) {
+        *state = InString;
+    }
+    putchar(c);
+}
+
+static bool handle_almost_comment(int c, enum ReadState* state) {
+    if (c == SLASH) {
+        *state = InSingleLineComment;
+    } else if (c == STAR) {
+        *state = InMultilineComment;
+    } else {
+        *state = Normal;
+        putchar(SLASH);
+        if (ungetc(c, stdin) == EOF) {
+            return false;
+        }
+    }
+    return true;
+}
+
+static void handle_single_comment(int c, enum ReadState* state) {
+    if (c == '\n') {
+        putchar(c);
+        *state = Normal;
+    }
+}
+
+static void handle_multi_comment(int c, enum ReadState* state) {
+    if (c == STAR) {
+        *state = AlmostEndMultilineComment;
+    }
+}
+
+static void handle_almost_end(int c, enum ReadState* st) {
+    if ('/' == c) {
+        *st = Normal;
+    } else if (c != STAR) {
+        *st = InMultilineComment;
+    }
+}
+
+static void handle_string_char(int c, enum ReadState* state, bool* escaped) {
+    putchar(c);
+
+    if (*escaped) {
+        *escaped = false;
+        return;
+    }
+
+    if (c == '\\') {
+        *escaped = true;
+        return;
+    }
+
+    if ((*state == InChar && c == CHAR_MARKER) ||
+        (*state == InString && c == STRING_MARKER)) {
+        *state = Normal;
+    }
+}
+
+int main(void) {
+    int c = 0;
     bool escaped = false;
-    enum ReadState current_state = Normal;
+    enum ReadState state = Normal;
 
-    while ((cur_c = getchar()) != EOF) {
-        switch (current_state) {
+    while ((c = getchar()) != EOF) {
+        switch (state) {
             case Normal:
-                switch (cur_c) {
-                    case SLASH:
-                        current_state = AlmostComment;
-                        continue;
-                    case CHAR_MARKER:
-                        current_state = InChar;
-                        break;
-                    case STRING_MARKER:
-                        current_state = InString;
-                        break;
-                    default:
-                        break;
-                }
-
-                putchar(cur_c);
+                handle_normal(c, &state);
                 break;
+
             case AlmostComment:
-                switch (cur_c) {
-                    case SLASH:
-                        current_state = InSingleLineComment;
-                        break;
-                    case STAR:
-                        current_state = InMultilineComment;
-                        break;
-                    default:
-                        current_state = Normal;
-
-                        putchar(SLASH);
-                        ungetc(cur_c, stdin);
-
-                        continue;
+                if (!handle_almost_comment(c, &state)) {
+                    return EXIT_FAILURE;
                 }
                 break;
+
             case InSingleLineComment:
-                if (cur_c == '\n') {
-                    putchar(cur_c);
-                    current_state = Normal;
-                };
+                handle_single_comment(c, &state);
                 break;
+
             case InMultilineComment:
-                if (cur_c == STAR) {
-                    current_state = AlmostEndMultilineComment;
-                }
+                handle_multi_comment(c, &state);
                 break;
+
             case AlmostEndMultilineComment:
-                if (cur_c == '/')
-                    current_state = Normal;
-                else if (cur_c != '*')
-                    current_state = InMultilineComment;
+                handle_almost_end(c, &state);
                 break;
+
             case InChar:
             case InString:
-                putchar(cur_c);
-                if (escaped)
-                    escaped = false;
-                else if (cur_c == '\\')
-                    escaped = true;
-                else if ((current_state == InChar && cur_c == CHAR_MARKER) ||
-                         (current_state == InString && cur_c == STRING_MARKER))
-                    current_state = Normal;
+                handle_string_char(c, &state, &escaped);
                 break;
         }
     }
 
-    if (current_state == AlmostComment) putchar(SLASH);
+    if (state == AlmostComment) {
+        putchar(SLASH);
+    }
 
     return EXIT_SUCCESS;
 }

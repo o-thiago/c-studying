@@ -3,46 +3,50 @@
 #include <time.h>
 
 /* binsearch: find x in v[0] <= v[1] <= ... <= v[n-1] */
-int binsearch(int x, int v[], int n) {
-    int low, high, mid;
-
-    low = 0;
-    high = n - 1;
+static int binsearch(int x, int v[], int n) {
+    int low = 0;
+    int mid = 0;
+    int high = n - 1;
 
     while (low <= high) {
         mid = (low + high) / 2;
 
-        if (x < v[mid])
+        if (x < v[mid]) {
             high = mid - 1;
-        else if (x > v[mid])
+        } else if (x > v[mid]) {
             low = mid + 1;
-        else
+        } else {
             return mid; /* found match */
+        }
     }
 
     return -1; /* no match */
 }
 
 /* binsearch: find x in v[0] <= v[1] <= ... <= v[n-1] */
-int optimal_binsearch(int x, int v[], int n) {
-    int low = 0, high = n - 1;
+static int optimal_binsearch(int x, int v[], int n) {
+    int low = 0;
+    int high = n - 1;
 
     while (low <= high) {
         int mid = (low + high) / 2;
 
-        if (v[mid] >= x)
+        if (v[mid] >= x) {
             high = mid - 1;
-        else
+        } else {
             low = mid + 1;
+        }
     }
 
     return (low < n && v[low] == x) ? v[low] : -1;
 }
 
-double run_benchmark(int (*search)(int, int[], int), int iterations, int v[],
-                     int n) {
+static double run_benchmark(int (*search)(int, int[], int), int iterations,
+                            int v[], int n) {
     clock_t start = clock();
-    for (int i = 0; i < iterations; i++) search(i % n, v, n);
+    for (int i = 0; i < iterations; i++) {
+        search(i % n, v, n);
+    }
     clock_t end = clock();
     return (double)(end - start) / CLOCKS_PER_SEC;
 }
@@ -54,7 +58,9 @@ int main(void) {
     constexpr int N = 1000000;
 
     static int v[N];
-    for (int i = 0; i < N; i++) v[i] = i;
+    for (int i = 0; i < N; i++) {
+        v[i] = i;
+    }
 
     printf("original: %f\n", run_benchmark(binsearch, N, v, N));
     printf("one test: %f\n", run_benchmark(optimal_binsearch, N, v, N));

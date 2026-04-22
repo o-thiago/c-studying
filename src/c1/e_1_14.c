@@ -2,14 +2,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-constexpr int CHAR_COUNTS = 26;
+static constexpr int CHAR_COUNTS = 26;
 
 int main() {
-    int c, char_frequency[CHAR_COUNTS];
-    for (int i = 0; i < CHAR_COUNTS; ++i) char_frequency[i] = 0;
+    int c = 0;
+    int char_frequency[CHAR_COUNTS];
+    for (int i = 0; i < CHAR_COUNTS; ++i) {
+        char_frequency[i] = 0;
+    }
 
-    while ((c = getchar()) != EOF)
-        if (isalpha(c)) ++char_frequency[c - 'a'];
+    while ((c = getchar()) != EOF) {
+        if (isalpha(c)) {
+            ++char_frequency[c - 'a'];
+        }
+    }
 
     for (int i = 0; i < CHAR_COUNTS; i++) {
         printf("%c: ", 'a' + i);
