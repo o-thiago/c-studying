@@ -113,18 +113,18 @@ static void set_union(const MathSet* a, const MathSet* b, MathSet* out) {
     }
 }
 
-static size_t set_union_with_repetition(const MathSet* a, const MathSet* b, int* out,
-                                        const size_t out_capacity) {
+static size_t set_union_with_repetition(const MathSet* a, const MathSet* b,
+                                        int* out, const size_t out_capacity) {
     if (a->count + b->count > out_capacity) {
         return 0;
     }
 
     for (size_t i = 0; i < a->count; ++i) {
-        out[i] = a->elements[i];
+        *out++ = a->elements[i];
     }
 
     for (size_t i = 0; i < b->count; ++i) {
-        out[i + a->count] = b->elements[i];
+        *out++ = b->elements[i];
     }
 
     return a->count + b->count;
@@ -143,7 +143,9 @@ static void read_int_set(char* buffer, MathSet* set) {
         }
 
         if (!set_add(set, value)) {
-            puts("Valor repetido. Digite novamente.");
+            puts(
+                "Valor repetido. Conjuntos matemáticos não aceitam repetição! "
+                "Digite novamente.");
             --i;
         }
     }
@@ -187,7 +189,8 @@ int main(void) {
 
     while (true) {
         for (size_t i = 0; i < MENU_OPTIONS_COUNT; ++i) {
-            const char* options[MENU_OPTIONS_COUNT] = {"Gravar vetor A",
+            const char* options[MENU_OPTIONS_COUNT] = {
+                "Gravar vetor A",
                 "Gravar vetor B",
                 "Diferença (A - B)",
                 "Diferença (B - A)",
@@ -205,7 +208,7 @@ int main(void) {
             continue;
         };
 
-       const MenuOptions option = --raw_option;
+        const MenuOptions option = --raw_option;
         if (option == MENU_EXIT) {
             break;
         }

@@ -2,9 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-static constexpr int DECIMAL_THRESHOLD = 10;
-static constexpr int ALPHABET_OFFSET = 10;
-
 static void reverse(char s[]) {
     for (unsigned i = 0, j = strlen(s) - 1; i < j; i++, j--) {
         char c = s[i];
@@ -14,6 +11,9 @@ static void reverse(char s[]) {
 }
 
 static void itob(int n, char s[], int b) {
+    constexpr int DECIMAL_THRESHOLD = 10;
+    constexpr int ALPHABET_OFFSET = 10;
+
     char* start = s;
     while (n) {
         int rem = n % b;
@@ -31,10 +31,16 @@ static void itob(int n, char s[], int b) {
 int main(void) {
     char s[BUFSIZ];
 
-    itob(72, s, 2);
+    constexpr int BINARY_BASE = 2;
+    constexpr int HEXADECIMAL_BASE = 16;
+
+    constexpr int FIRST_INPUT = 15;
+    constexpr int SECOND_INPUT = 72;
+
+    itob(FIRST_INPUT, s, BINARY_BASE);
     printf("%s\n", s);
 
-    itob(15, s, 16);
+    itob(SECOND_INPUT, s, HEXADECIMAL_BASE);
     printf("%s\n", s);
 
     return EXIT_SUCCESS;

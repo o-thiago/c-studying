@@ -3,7 +3,7 @@
 #include <time.h>
 
 /* binsearch: find x in v[0] <= v[1] <= ... <= v[n-1] */
-static int binsearch(int x, int v[], int n) {
+static int binsearch(const int x, const int v[], const int n) {
     int low = 0;
     int mid = 0;
     int high = n - 1;
@@ -24,7 +24,7 @@ static int binsearch(int x, int v[], int n) {
 }
 
 /* binsearch: find x in v[0] <= v[1] <= ... <= v[n-1] */
-static int optimal_binsearch(int x, int v[], int n) {
+static int optimal_binsearch(const int x, const int v[], const int n) {
     int low = 0;
     int high = n - 1;
 
@@ -41,8 +41,8 @@ static int optimal_binsearch(int x, int v[], int n) {
     return (low < n && v[low] == x) ? v[low] : -1;
 }
 
-static double run_benchmark(int (*search)(int, int[], int), int iterations,
-                            int v[], int n) {
+static double run_benchmark(int (*search)(const int, const int[], const int),
+                            const int iterations, const int v[], const int n) {
     clock_t start = clock();
     for (int i = 0; i < iterations; i++) {
         search(i % n, v, n);
