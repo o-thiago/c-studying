@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-static void expand(char* s1, char* s2) {
+[[maybe_unused]] static void expand(char* s1, char* s2) {
     char c = 0;
     while ((c = *s1++)) {
         if (*s1 != '-' || *(s1 + 1) < c) {

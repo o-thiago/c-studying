@@ -16,7 +16,7 @@
             packages = with pkgs; [
               clang-tools
               gcc
-              gnumake
+              cmake
             ];
           };
         };

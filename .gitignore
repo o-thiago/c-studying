@@ -1,3 +1,5 @@
 .direnv
 .idea
 bin
+build
+cmake*

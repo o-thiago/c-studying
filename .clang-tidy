@@ -1,20 +1,5 @@
-ExtraArgs:
-  [
-    "-std=c23",
-    "-Wall",
-    "-Wextra",
-    "-Wpedantic",
-    "-Wshadow",
-    "-Wformat=2",
-    "-Wstrict-prototypes",
-    "-Wold-style-definition",
-    "-Wmissing-prototypes",
-    "-Wwrite-strings",
-    "-Wcast-qual",
-  ]
-Checks: >
-  *,
+Checks: "*,
   -readability-identifier-length,
   -altera-*,
   -llvmlibc-restrict-system-libc-headers,
-  -bugprone-easily-swappable-parameters
+  -bugprone-easily-swappable-parameters"
