@@ -11,4 +11,5 @@ CompileFlags:
       -Wold-style-definition,
       -Wmissing-prototypes,
       -Wwrite-strings,
+      -Wcast-qual
     ]
