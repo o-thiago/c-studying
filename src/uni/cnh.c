@@ -138,7 +138,7 @@ int main(void) {
         if (optional_cnh_number_new_line_char) {
             *optional_cnh_number_new_line_char = '\0';
         } else {
-            int next = getchar();
+            const int next = getchar();
             if (next != '\n' && next != EOF) {
                 cnh_number_overflowed = true;
 

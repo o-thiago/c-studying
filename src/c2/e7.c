@@ -2,8 +2,8 @@
 #include <stdlib.h>
 
 static unsigned invert(unsigned x, int p, int n) {
-    unsigned mask = ~(~0U << (unsigned)n);
-    unsigned shift = p - n + 1;
+    const unsigned mask = ~(~0U << (unsigned)n);
+    const unsigned shift = p - n + 1;
     return x ^ (mask << shift);
 }
 

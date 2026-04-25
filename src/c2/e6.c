@@ -4,19 +4,19 @@
 // Replace in x the n bits ending at position p with the n rightmost bits of y
 static unsigned setbits(unsigned x, int p, int n, unsigned y) {
     // Mask with n rightmost bits set to 1
-    unsigned mask = ~(~0U << (unsigned)n);
+    const unsigned mask = ~(~0U << (unsigned) n);
 
     // Align block so it ends at position p
-    unsigned shift = p - n + 1;
+    const unsigned shift = p - n + 1;
 
     // Clear target bits in x
-    unsigned xcleared = x & ~(mask << shift);
+    const unsigned x_cleared = x & ~(mask << shift);
 
     // Take n rightmost bits of y and move into position
-    unsigned ybits = (y & mask) << shift;
+    const unsigned y_bits = (y & mask) << shift;
 
     // Combine
-    return xcleared | ybits;
+    return x_cleared | y_bits;
 }
 
 static constexpr int BITS_X = 0b01010101;

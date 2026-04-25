@@ -1,4 +1,3 @@
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -27,18 +26,18 @@ typedef enum {
     TOK_ESCAPE = '\\'
 } TokenType;
 
-static bool is_match(TokenType open, TokenType close) {
+static bool is_match(const TokenType open, const TokenType close) {
     return ((open == TOK_LPAREN && close == TOK_RPAREN) ||
             (open == TOK_LBRACE && close == TOK_RBRACE) ||
             (open == TOK_LBRACKET && close == TOK_RBRACKET)) != 0;
 }
 
-static bool handle_mismatch(char c) {
+static bool handle_mismatch(const char c) {
     printf("Error: Mismatched or unexpected '%c'\n", c);
     return false;
 }
 
-static bool handle_normal(int c, int prev, ParserState* st, TokenType* stack,
+static bool handle_normal(const int c, const int prev, ParserState* st, TokenType* stack,
                           int* top) {
     switch (c) {
         case TOK_DQUOTE:
@@ -83,25 +82,25 @@ static bool handle_normal(int c, int prev, ParserState* st, TokenType* stack,
     return true;
 }
 
-static void handle_string(int c, int prev, ParserState* st) {
+static void handle_string(const int c, const int prev, ParserState* st) {
     if (c == TOK_DQUOTE && prev != TOK_ESCAPE) {
         *st = NORMAL;
     }
 }
 
-static void handle_char(int c, int prev, ParserState* st) {
+static void handle_char(const int c, const int prev, ParserState* st) {
     if (c == TOK_SQUOTE && prev != TOK_ESCAPE) {
         *st = NORMAL;
     }
 }
 
-static void handle_block_comment(int c, int prev, ParserState* st) {
+static void handle_block_comment(const int c, const int prev, ParserState* st) {
     if (prev == TOK_STAR && c == TOK_SLASH) {
         *st = NORMAL;
     }
 }
 
-static void handle_line_comment(int c, ParserState* st) {
+static void handle_line_comment(const int c, ParserState* st) {
     if (c == TOK_NEWLINE) {
         *st = NORMAL;
     }

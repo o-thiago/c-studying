@@ -5,8 +5,13 @@
 static constexpr int HEX_BASE = 16;
 static constexpr int HEX_ALPHA_OFFSET = 10;
 
-static int htoi(const char* str) {
-    unsigned int i = 0;
+static int hex_char_to_int(char c) {
+    c = toupper(c);
+    return isdigit(c) ? c - '0' : (c >= 'A' && c <= 'F') ? (c - 'A' + HEX_ALPHA_OFFSET) ? -1;
+}
+
+static int htoi(const char *str) {
+    unsigned i = 0;
     int res = 0;
 
     if (str[0] == '0' && toupper(str[1]) == 'X') {
@@ -14,13 +19,11 @@ static int htoi(const char* str) {
     }
 
     for (; str[i] != '\0'; ++i) {
-        if (!isxdigit(str[i])) {
+        const int val = hex_char_to_int(str[i]);
+        if (val == -1) {
             break;
         }
-
-        int c = toupper(str[i]);
-        int digit = isdigit(c) ? c - '0' : (c - 'A' + HEX_ALPHA_OFFSET);
-        res = (res * HEX_BASE) + digit;
+        res = (res * HEX_BASE) + val;
     }
 
     return res;

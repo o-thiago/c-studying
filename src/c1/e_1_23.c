@@ -1,4 +1,3 @@
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -17,7 +16,7 @@ enum ReadState {
     InString,
 };
 
-static void handle_normal(int c, enum ReadState* state) {
+static void handle_normal(const int c, enum ReadState* state) {
     if (c == SLASH) {
         *state = AlmostComment;
         return;
@@ -30,7 +29,7 @@ static void handle_normal(int c, enum ReadState* state) {
     putchar(c);
 }
 
-static bool handle_almost_comment(int c, enum ReadState* state) {
+static bool handle_almost_comment(const int c, enum ReadState* state) {
     if (c == SLASH) {
         *state = InSingleLineComment;
     } else if (c == STAR) {
@@ -45,20 +44,20 @@ static bool handle_almost_comment(int c, enum ReadState* state) {
     return true;
 }
 
-static void handle_single_comment(int c, enum ReadState* state) {
+static void handle_single_comment(const int c, enum ReadState* state) {
     if (c == '\n') {
         putchar(c);
         *state = Normal;
     }
 }
 
-static void handle_multi_comment(int c, enum ReadState* state) {
+static void handle_multi_comment(const int c, enum ReadState* state) {
     if (c == STAR) {
         *state = AlmostEndMultilineComment;
     }
 }
 
-static void handle_almost_end(int c, enum ReadState* st) {
+static void handle_almost_end(const int c, enum ReadState* st) {
     if ('/' == c) {
         *st = Normal;
     } else if (c != STAR) {
@@ -66,7 +65,7 @@ static void handle_almost_end(int c, enum ReadState* st) {
     }
 }
 
-static void handle_string_char(int c, enum ReadState* state, bool* escaped) {
+static void handle_string_char(const int c, enum ReadState* state, bool* escaped) {
     putchar(c);
 
     if (*escaped) {

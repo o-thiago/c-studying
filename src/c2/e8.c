@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 static unsigned rightrot(unsigned x, unsigned n) {
-    int width = sizeof(x) * CHAR_BIT;
+    const int width = sizeof(x) * CHAR_BIT;
     n %= width;
 
     if (n == 0) {

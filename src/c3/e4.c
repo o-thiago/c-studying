@@ -1,10 +1,12 @@
+#include <limits.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 #include "string.h"
 
 static void reverse(char s[]) {
     for (unsigned i = 0, j = strlen(s) - 1; i < j; i++, j--) {
-        char c = s[i];
+        const char c = s[i];
         s[i] = s[j];
         s[j] = c;
     }
@@ -15,7 +17,7 @@ static constexpr int DECIMAL_BASE = 10;
 /* itoa: convert n to characters in s */
 [[maybe_unused]] static void itoa_bad(int n, char s[]) {
     int i = 0;
-    int sign = n;
+    const int sign = n;
 
     if (n < 0) { /* record sign */
         n = -n;  /* make n positive */
@@ -35,9 +37,9 @@ static constexpr int DECIMAL_BASE = 10;
 }
 
 /* itoa: convert n to characters in s */
-[[maybe_unused]] static void itoa(int n, char s[]) {
+static void itoa(int n, char s[]) {
     int i = 0;
-    int sign = n;
+    const int sign = n;
 
     i = 0;
     do {
@@ -58,7 +60,14 @@ static constexpr int DECIMAL_BASE = 10;
 // Explain why not. Modify it to print that value correctly, regardless of the
 // machine on which it runs.
 //
-// ANSWER: Because in a two complements system the absolute value of INT_MIN is
+// ANSWER: Because in a two-complements system, the absolute value of INT_MIN is
 // exactly one unit more than the value of INT_MAX, when we try to remove the
-// sign we reach unexpected behaviour because the value is unnrepresentable.
-int main(void) { return EXIT_SUCCESS; }
+// sign we reach unexpected behavior because the value is unrepresentable.
+int main(void) {
+    char buffer[BUFSIZ];
+
+    itoa(INT_MAX, buffer);
+    itoa(INT_MIN, buffer);
+
+    return EXIT_SUCCESS;
+}

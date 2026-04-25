@@ -4,19 +4,19 @@
 
 static void reverse(char s[]) {
     for (unsigned i = 0, j = strlen(s) - 1; i < j; i++, j--) {
-        char c = s[i];
+        const char c = s[i];
         s[i] = s[j];
         s[j] = c;
     }
 }
 
-static void itob(int n, char s[], int b) {
-    constexpr int DECIMAL_THRESHOLD = 10;
-    constexpr int ALPHABET_OFFSET = 10;
-
+static void itob(int n, char s[], const int b) {
     char* start = s;
     while (n) {
-        int rem = n % b;
+        constexpr int ALPHABET_OFFSET = 10;
+        constexpr int DECIMAL_THRESHOLD = 10;
+
+        const int rem = n % b;
         *s++ = (char)(rem < DECIMAL_THRESHOLD ? '0' + rem
                                               : 'A' + rem - ALPHABET_OFFSET);
         n /= b;

@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 static size_t str_len(const char* s) {
     size_t i = 0;

@@ -29,7 +29,7 @@ static int optimal_binsearch(const int x, const int v[], const int n) {
     int high = n - 1;
 
     while (low <= high) {
-        int mid = (low + high) / 2;
+        const int mid = (low + high) / 2;
 
         if (v[mid] >= x) {
             high = mid - 1;
@@ -43,11 +43,11 @@ static int optimal_binsearch(const int x, const int v[], const int n) {
 
 static double run_benchmark(int (*search)(const int, const int[], const int),
                             const int iterations, const int v[], const int n) {
-    clock_t start = clock();
+    const clock_t start = clock();
     for (int i = 0; i < iterations; i++) {
         search(i % n, v, n);
     }
-    clock_t end = clock();
+    const clock_t end = clock();
     return (double)(end - start) / CLOCKS_PER_SEC;
 }
 

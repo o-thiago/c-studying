@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static char special_char_to_normal(char special_char) {
+static char special_char_to_normal(const char special_char) {
     switch (special_char) {
         case '\n':
             return 'n';
@@ -12,7 +12,7 @@ static char special_char_to_normal(char special_char) {
     }
 }
 
-static char normal_char_to_special(char normal_char) {
+static char normal_char_to_special(const char normal_char) {
     switch (normal_char) {
         case 'n':
             return '\n';
@@ -23,7 +23,7 @@ static char normal_char_to_special(char normal_char) {
     }
 }
 
-static void escape(char* s, char* t) {
+static void escape(const char* s, char* t) {
     while (*s) {
         switch (*s) {
             case '\n':
@@ -40,7 +40,7 @@ static void escape(char* s, char* t) {
     *t = '\0';
 }
 
-static void escape_rev(char* s, char* t) {
+static void escape_rev(const char* s, char* t) {
     while (*s) {
         if (*s != '\\') {
             *t++ = *s;

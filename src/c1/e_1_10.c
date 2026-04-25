@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static const char* get_replacing_char(int c) {
+static const char* get_replacing_char(const int c) {
     switch (c) {
         case '\t':
             return "\\t";

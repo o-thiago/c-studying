@@ -6,69 +6,72 @@
 
 static constexpr int DECIMAL_BASE = 10;
 
-static bool is_numeric_input(const char* buffer, const char* end) {
+static bool is_numeric_input(const char *buffer, const char *end) {
     return errno == 0 && buffer != end && (*end == '\n' || *end == '\0');
 }
 
-static bool parse_unsigned(char* buffer, unsigned long* out) {
+static bool parse_unsigned(char *buffer, unsigned long *out) {
     if (!fgets(buffer, BUFSIZ, stdin)) {
         return false;
     }
 
-    char* end = nullptr;
+    char *end = nullptr;
     errno = 0;
     *out = strtoul(buffer, &end, DECIMAL_BASE);
     return is_numeric_input(buffer, end);
 }
 
-static bool parse_signed(char* buffer, long* out) {
+static bool parse_signed(char *buffer, long *out) {
     if (!fgets(buffer, BUFSIZ, stdin)) {
         return false;
     }
 
-    char* end = nullptr;
+    char *end = nullptr;
     errno = 0;
     *out = strtol(buffer, &end, DECIMAL_BASE);
     return is_numeric_input(buffer, end);
 }
 
-static bool read_uint(char* buffer, unsigned int* out) {
+static bool read_uint(char *buffer, unsigned int *out) {
+    constexpr unsigned UMAX = (INT_MAX * 2U) + 1U;
+
     unsigned long val = 0;
-    if (!parse_unsigned(buffer, &val) || val > UINT_MAX) {
+    if (!parse_unsigned(buffer, &val) || (val > UMAX)) {
         return false;
     }
-    *out = (unsigned int)val;
+
+    *out = (unsigned int) val;
     return true;
 }
 
-static bool read_int(char* buffer, int* out) {
+static bool read_int(char *buffer, int *out) {
     long val = 0;
     if (!parse_signed(buffer, &val) || val < INT_MIN || val > INT_MAX) {
         return false;
     }
-    *out = (int)val;
+    *out = (int) val;
     return true;
 }
 
-static void output_array(const int* arr, const size_t size) {
+static void output_array(const int *arr, const size_t size) {
     for (size_t i = 0; i < size; ++i) {
         printf("vetor[%zu]=%d\n", i, arr[i]);
     }
 }
 
 typedef struct {
-    int* elements;
+    int *elements;
     size_t count;
     size_t capacity;
 } MathSet;
 
-static void init_set(MathSet* set, int* elements, const size_t capacity) {
+static void init_set(MathSet *set, int *elements, const size_t capacity) {
     set->elements = elements;
     set->capacity = capacity;
     set->count = 0;
 }
 
-static bool set_contains(const MathSet* set, const int value) {
+static bool set_contains(const MathSet *set, const int value) {
     for (size_t i = 0; i < set->count; ++i) {
         if (set->elements[i] == value) {
             return true;
@@ -77,8 +80,8 @@ static bool set_contains(const MathSet* set, const int value) {
     return false;
 }
 
-static bool set_add(MathSet* set, const int value) {
-    if (set->count >= set->capacity || (int)set_contains(set, value)) {
+static bool set_add(MathSet *set, const int value) {
+    if (set->count >= set->capacity || (int) set_contains(set, value)) {
         return false;
     }
 
@@ -86,7 +89,7 @@ static bool set_add(MathSet* set, const int value) {
     return true;
 }
 
-static void set_difference(const MathSet* a, const MathSet* b, MathSet* out) {
+static void set_difference(const MathSet *a, const MathSet *b, MathSet *out) {
     for (size_t i = 0; i < a->count; ++i) {
         if (!set_contains(b, a->elements[i])) {
             set_add(out, a->elements[i]);
@@ -94,7 +97,7 @@ static void set_difference(const MathSet* a, const MathSet* b, MathSet* out) {
     }
 }
 
-static void set_intersection(const MathSet* a, const MathSet* b, MathSet* out) {
+static void set_intersection(const MathSet *a, const MathSet *b, MathSet *out) {
     for (size_t i = 0; i < a->count; ++i) {
         if (set_contains(b, a->elements[i])) {
             set_add(out, a->elements[i]);
@@ -102,7 +105,7 @@ static void set_intersection(const MathSet* a, const MathSet* b, MathSet* out) {
     }
 }
 
-static void set_union(const MathSet* a, const MathSet* b, MathSet* out) {
+static void set_union(const MathSet *a, const MathSet *b, MathSet *out) {
     for (size_t i = 0; i < a->count; ++i) {
         set_add(out, a->elements[i]);
     }
@@ -112,8 +115,8 @@ static void set_union(const MathSet* a, const MathSet* b, MathSet* out) {
     }
 }
 
-static size_t set_union_with_repetition(const MathSet* a, const MathSet* b,
-                                        int* out, const size_t out_capacity) {
+static size_t set_union_with_repetition(const MathSet *a, const MathSet *b,
+                                        int *out, const size_t out_capacity) {
     if (a->count + b->count > out_capacity) {
         return 0;
     }
@@ -129,11 +132,11 @@ static size_t set_union_with_repetition(const MathSet* a, const MathSet* b,
     return a->count + b->count;
 }
 
-static void read_int_set(char* buffer, MathSet* set) {
+static void read_int_set(char *buffer, MathSet *set) {
     set->count = 0;
     for (size_t i = 0; i < set->capacity; ++i) {
         int value = 0;
-        printf("Digite o valor do vetor[%zu]=", i);
+        printf("Digite o valor do conjunto[%zu]=", i);
 
         if (!read_int(buffer, &value)) {
             puts("Valor digitado inválido. Digite novamente.");
@@ -150,7 +153,7 @@ static void read_int_set(char* buffer, MathSet* set) {
     }
 }
 
-static void output_set(const MathSet* set) {
+static void output_set(const MathSet *set) {
     for (size_t i = 0; i < set->count; ++i) {
         printf("conjunto[%zu]=%d\n", i, set->elements[i]);
     }
@@ -188,7 +191,7 @@ int main(void) {
 
     while (true) {
         for (size_t i = 0; i < MENU_OPTIONS_COUNT; ++i) {
-            const char* options[MENU_OPTIONS_COUNT] = {
+            const char *options[MENU_OPTIONS_COUNT] = {
                 "Gravar vetor A",
                 "Gravar vetor B",
                 "Diferença (A - B)",
@@ -196,7 +199,8 @@ int main(void) {
                 "União (A ∪ B) sem repetição",
                 "União (A ∪ B) com repetição",
                 "Intersecção (A ∩ B)",
-                "Sair"};
+                "Sair"
+            };
             printf("%zu - %s\n", i + 1, options[i]);
         }
 
