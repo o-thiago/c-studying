@@ -56,15 +56,6 @@ static void output_array(const int* arr, const size_t size) {
     }
 }
 
-static bool array_contains(const int* arr, const size_t size, const int value) {
-    for (size_t i = 0; i < size; ++i) {
-        if (arr[i] == value) {
-            return true;
-        }
-    }
-    return false;
-}
-
 typedef struct {
     int* elements;
     size_t count;
@@ -77,9 +68,17 @@ static void init_set(MathSet* set, int* elements, const size_t capacity) {
     set->count = 0;
 }
 
+static bool set_contains(const MathSet* set, const int value) {
+    for (size_t i = 0; i < set->count; ++i) {
+        if (set->elements[i] == value) {
+            return true;
+        }
+    }
+    return false;
+}
+
 static bool set_add(MathSet* set, const int value) {
-    if (set->count >= set->capacity ||
-        (int)array_contains(set->elements, set->count, value)) {
+    if (set->count >= set->capacity || (int)set_contains(set, value)) {
         return false;
     }
 
@@ -89,7 +88,7 @@ static bool set_add(MathSet* set, const int value) {
 
 static void set_difference(const MathSet* a, const MathSet* b, MathSet* out) {
     for (size_t i = 0; i < a->count; ++i) {
-        if (!array_contains(b->elements, b->count, a->elements[i])) {
+        if (!set_contains(b, a->elements[i])) {
             set_add(out, a->elements[i]);
         }
     }
@@ -97,7 +96,7 @@ static void set_difference(const MathSet* a, const MathSet* b, MathSet* out) {
 
 static void set_intersection(const MathSet* a, const MathSet* b, MathSet* out) {
     for (size_t i = 0; i < a->count; ++i) {
-        if (array_contains(b->elements, b->count, a->elements[i])) {
+        if (set_contains(b, a->elements[i])) {
             set_add(out, a->elements[i]);
         }
     }
