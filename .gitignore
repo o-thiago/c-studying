@@ -1,5 +1,4 @@
 .direnv
-.idea
 .cache
 bin
 build
