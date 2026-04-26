@@ -6,8 +6,17 @@ static constexpr int HEX_BASE = 16;
 static constexpr int HEX_ALPHA_OFFSET = 10;
 
 static int hex_char_to_int(char c) {
-    c = toupper(c);
-    return isdigit(c) ? c - '0' : (c >= 'A' && c <= 'F') ? (c - 'A' + HEX_ALPHA_OFFSET) ? -1;
+    c = (char)toupper((unsigned char)c);
+
+    if (isdigit((unsigned char)c)) {
+        return c - '0';
+    }
+
+    if (c >= 'A' && c <= 'F') {
+        return c - 'A' + HEX_ALPHA_OFFSET;
+    }
+
+    return -1;
 }
 
 static int htoi(const char *str) {

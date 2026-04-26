@@ -2,15 +2,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static unsigned rightrot(unsigned x, unsigned n) {
-    const int width = sizeof(x) * CHAR_BIT;
-    n %= width;
+static unsigned rightrot(const unsigned x, unsigned n) {
+    constexpr int WIDTH = sizeof(x) * CHAR_BIT;
+    n %= WIDTH;
 
     if (n == 0) {
         return x;
     }
 
-    return (x >> n) | (x << (width - n));
+    return (x >> n) | (x << (WIDTH - n));
 }
 
 static constexpr int BIT_FROM = 0b01010101;
