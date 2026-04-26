@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static void lower(char *str) {
+static void lower(char *str)
+{
     for (char *p = str; *p != '\0'; ++p) {
-        *p += (*p >= 'A' && *p <= 'Z') ? 'a' - 'A' : 0;
+	*p += (*p >= 'A' && *p <= 'Z') ? 'a' - 'A' : 0;
     }
 }
 
-int main(void) {
+int main(void)
+{
     char s[] = "ABCDEFG";
     lower(s);
 

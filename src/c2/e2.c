@@ -5,34 +5,36 @@
 static constexpr int HEX_BASE = 16;
 static constexpr int HEX_ALPHA_OFFSET = 10;
 
-static int hex_char_to_int(char c) {
+static int hex_char_to_int(char c)
+{
     c = (char)toupper((unsigned char)c);
 
     if (isdigit((unsigned char)c)) {
-        return c - '0';
+	return c - '0';
     }
 
     if (c >= 'A' && c <= 'F') {
-        return c - 'A' + HEX_ALPHA_OFFSET;
+	return c - 'A' + HEX_ALPHA_OFFSET;
     }
 
     return -1;
 }
 
-static int htoi(const char *str) {
+static int htoi(const char *str)
+{
     unsigned i = 0;
     int res = 0;
 
     if (str[0] == '0' && toupper(str[1]) == 'X') {
-        i = 2;
+	i = 2;
     }
 
     for (; str[i] != '\0'; ++i) {
-        const int val = hex_char_to_int(str[i]);
-        if (val == -1) {
-            break;
-        }
-        res = (res * HEX_BASE) + val;
+	const int val = hex_char_to_int(str[i]);
+	if (val == -1) {
+	    break;
+	}
+	res = (res * HEX_BASE) + val;
     }
 
     return res;
@@ -44,7 +46,8 @@ static int htoi(const char *str) {
  * integer value. The allowable digits are 0 through 9, a through f, and A
  * through F.
  */
-int main(void) {
+int main(void)
+{
     printf("%d", htoi("123456789"));
     return EXIT_SUCCESS;
 }

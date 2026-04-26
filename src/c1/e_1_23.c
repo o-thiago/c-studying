@@ -16,112 +16,120 @@ enum ReadState {
     InString,
 };
 
-static void handle_normal(const int c, enum ReadState* state) {
+static void handle_normal(const int c, enum ReadState *state)
+{
     if (c == SLASH) {
-        *state = AlmostComment;
-        return;
+	*state = AlmostComment;
+	return;
     }
     if (c == CHAR_MARKER) {
-        *state = InChar;
+	*state = InChar;
     } else if (c == STRING_MARKER) {
-        *state = InString;
+	*state = InString;
     }
     putchar(c);
 }
 
-static bool handle_almost_comment(const int c, enum ReadState* state) {
+static bool handle_almost_comment(const int c, enum ReadState *state)
+{
     if (c == SLASH) {
-        *state = InSingleLineComment;
+	*state = InSingleLineComment;
     } else if (c == STAR) {
-        *state = InMultilineComment;
+	*state = InMultilineComment;
     } else {
-        *state = Normal;
-        putchar(SLASH);
-        if (ungetc(c, stdin) == EOF) {
-            return false;
-        }
+	*state = Normal;
+	putchar(SLASH);
+	if (ungetc(c, stdin) == EOF) {
+	    return false;
+	}
     }
     return true;
 }
 
-static void handle_single_comment(const int c, enum ReadState* state) {
+static void handle_single_comment(const int c, enum ReadState *state)
+{
     if (c == '\n') {
-        putchar(c);
-        *state = Normal;
+	putchar(c);
+	*state = Normal;
     }
 }
 
-static void handle_multi_comment(const int c, enum ReadState* state) {
+static void handle_multi_comment(const int c, enum ReadState *state)
+{
     if (c == STAR) {
-        *state = AlmostEndMultilineComment;
+	*state = AlmostEndMultilineComment;
     }
 }
 
-static void handle_almost_end(const int c, enum ReadState* st) {
+static void handle_almost_end(const int c, enum ReadState *st)
+{
     if ('/' == c) {
-        *st = Normal;
+	*st = Normal;
     } else if (c != STAR) {
-        *st = InMultilineComment;
+	*st = InMultilineComment;
     }
 }
 
-static void handle_string_char(const int c, enum ReadState* state, bool* escaped) {
+static void handle_string_char(const int c, enum ReadState *state,
+			       bool *escaped)
+{
     putchar(c);
 
     if (*escaped) {
-        *escaped = false;
-        return;
+	*escaped = false;
+	return;
     }
 
     if (c == '\\') {
-        *escaped = true;
-        return;
+	*escaped = true;
+	return;
     }
 
     if ((*state == InChar && c == CHAR_MARKER) ||
-        (*state == InString && c == STRING_MARKER)) {
-        *state = Normal;
+	(*state == InString && c == STRING_MARKER)) {
+	*state = Normal;
     }
 }
 
-int main(void) {
+int main(void)
+{
     int c = 0;
     bool escaped = false;
     enum ReadState state = Normal;
 
     while ((c = getchar()) != EOF) {
-        switch (state) {
-            case Normal:
-                handle_normal(c, &state);
-                break;
+	switch (state) {
+	case Normal:
+	    handle_normal(c, &state);
+	    break;
 
-            case AlmostComment:
-                if (!handle_almost_comment(c, &state)) {
-                    return EXIT_FAILURE;
-                }
-                break;
+	case AlmostComment:
+	    if (!handle_almost_comment(c, &state)) {
+		return EXIT_FAILURE;
+	    }
+	    break;
 
-            case InSingleLineComment:
-                handle_single_comment(c, &state);
-                break;
+	case InSingleLineComment:
+	    handle_single_comment(c, &state);
+	    break;
 
-            case InMultilineComment:
-                handle_multi_comment(c, &state);
-                break;
+	case InMultilineComment:
+	    handle_multi_comment(c, &state);
+	    break;
 
-            case AlmostEndMultilineComment:
-                handle_almost_end(c, &state);
-                break;
+	case AlmostEndMultilineComment:
+	    handle_almost_end(c, &state);
+	    break;
 
-            case InChar:
-            case InString:
-                handle_string_char(c, &state, &escaped);
-                break;
-        }
+	case InChar:
+	case InString:
+	    handle_string_char(c, &state, &escaped);
+	    break;
+	}
     }
 
     if (state == AlmostComment) {
-        putchar(SLASH);
+	putchar(SLASH);
     }
 
     return EXIT_SUCCESS;

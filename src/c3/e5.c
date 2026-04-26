@@ -2,24 +2,26 @@
 #include <stdlib.h>
 #include <string.h>
 
-static void reverse(char s[]) {
+static void reverse(char s[])
+{
     for (unsigned i = 0, j = strlen(s) - 1; i < j; i++, j--) {
-        const char c = s[i];
-        s[i] = s[j];
-        s[j] = c;
+	const char c = s[i];
+	s[i] = s[j];
+	s[j] = c;
     }
 }
 
-static void itob(int n, char s[], const int b) {
-    char* start = s;
+static void itob(int n, char s[], const int b)
+{
+    char *start = s;
     while (n) {
-        constexpr int ALPHABET_OFFSET = 10;
-        constexpr int DECIMAL_THRESHOLD = 10;
+	constexpr int ALPHABET_OFFSET = 10;
+	constexpr int DECIMAL_THRESHOLD = 10;
 
-        const int rem = n % b;
-        *s++ = (char)(rem < DECIMAL_THRESHOLD ? '0' + rem
-                                              : 'A' + rem - ALPHABET_OFFSET);
-        n /= b;
+	const int rem = n % b;
+	*s++ = (char)(rem < DECIMAL_THRESHOLD ? '0' + rem
+					      : 'A' + rem - ALPHABET_OFFSET);
+	n /= b;
     }
     *s = '\0';
     reverse(start);
@@ -28,7 +30,8 @@ static void itob(int n, char s[], const int b) {
 // Write the function itob(n,s,b) that converts the integer n into a base b
 // character representation in the string s. In particular, itob(n,s,16) formats
 // n as a hexadecimal integer in s./
-int main(void) {
+int main(void)
+{
     char s[BUFSIZ];
 
     constexpr int BINARY_BASE = 2;

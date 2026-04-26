@@ -4,32 +4,34 @@
 
 #include "string.h"
 
-static void reverse(char s[]) {
+static void reverse(char s[])
+{
     for (unsigned i = 0, j = strlen(s) - 1; i < j; i++, j--) {
-        const char c = s[i];
-        s[i] = s[j];
-        s[j] = c;
+	const char c = s[i];
+	s[i] = s[j];
+	s[j] = c;
     }
 }
 
 static constexpr int DECIMAL_BASE = 10;
 
 /* itoa: convert n to characters in s */
-[[maybe_unused]] static void itoa_bad(int n, char s[]) {
+[[maybe_unused]] static void itoa_bad(int n, char s[])
+{
     int i = 0;
     const int sign = n;
 
     if (n < 0) { /* record sign */
-        n = -n;  /* make n positive */
+	n = -n;	 /* make n positive */
     }
 
     i = 0;
     do { /* generate digits in reverse order */
-        s[i++] = (char)((n % DECIMAL_BASE) + '0'); /* get next digit */
+	s[i++] = (char)((n % DECIMAL_BASE) + '0'); /* get next digit */
     } while ((n /= DECIMAL_BASE) > 0); /* delete it */
 
     if (sign < 0) {
-        s[i++] = '-';
+	s[i++] = '-';
     }
 
     s[i] = '\0';
@@ -37,17 +39,18 @@ static constexpr int DECIMAL_BASE = 10;
 }
 
 /* itoa: convert n to characters in s */
-static void itoa(int n, char s[]) {
+static void itoa(int n, char s[])
+{
     int i = 0;
     const int sign = n;
 
     i = 0;
     do {
-        s[i++] = (char)(abs(n % DECIMAL_BASE) + '0');
+	s[i++] = (char)(abs(n % DECIMAL_BASE) + '0');
     } while ((n /= DECIMAL_BASE) != 0);
 
     if (sign < 0) {
-        s[i++] = '-';
+	s[i++] = '-';
     }
 
     s[i] = '\0';
@@ -63,7 +66,8 @@ static void itoa(int n, char s[]) {
 // ANSWER: Because in a two-complements system, the absolute value of INT_MIN is
 // exactly one unit more than the value of INT_MAX, when we try to remove the
 // sign we reach unexpected behavior because the value is unrepresentable.
-int main(void) {
+int main(void)
+{
     char buffer[BUFSIZ];
 
     itoa(INT_MAX, buffer);

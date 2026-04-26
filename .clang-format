@@ -1,5 +1,7 @@
-Language: Cpp
-BasedOnStyle: Google
+BasedOnStyle: LLVM
 IndentWidth: 4
-IndentCaseLabels: true
-ColumnLimit: 80
+UseTab: Always
+BreakBeforeBraces: Linux
+AllowShortIfStatementsOnASingleLine: false
+IndentCaseLabels: false
+PointerAlignment: Right

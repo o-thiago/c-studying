@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static unsigned bitcount(unsigned x) {
+static unsigned bitcount(unsigned x)
+{
     unsigned b = 0;
     while (x) {
-        x &= (x - 1);
-        ++b;
+	x &= (x - 1);
+	++b;
     }
     return b;
 }
@@ -21,7 +22,8 @@ static constexpr int BIT_FROM = 0b01010101;
 // always comparing two different lsb, either 0 or 1, which in turn always
 // is 0. So all the values will end up unchanged except the lsb which will
 // be 0, therefore deleted.
-int main(void) {
+int main(void)
+{
     printf("%d", bitcount(BIT_FROM));
     return EXIT_SUCCESS;
 }
