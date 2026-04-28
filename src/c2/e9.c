@@ -3,12 +3,12 @@
 
 static unsigned bitcount(unsigned x)
 {
-    unsigned b = 0;
-    while (x) {
-	x &= (x - 1);
-	++b;
-    }
-    return b;
+	unsigned b = 0;
+	while (x) {
+		x &= (x - 1);
+		++b;
+	}
+	return b;
 }
 
 static constexpr int BIT_FROM = 0b01010101;
@@ -24,6 +24,6 @@ static constexpr int BIT_FROM = 0b01010101;
 // be 0, therefore deleted.
 int main(void)
 {
-    printf("%d", bitcount(BIT_FROM));
-    return EXIT_SUCCESS;
+	printf("%d", bitcount(BIT_FROM));
+	return EXIT_SUCCESS;
 }

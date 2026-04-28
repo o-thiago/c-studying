@@ -3,9 +3,9 @@
 
 static unsigned invert(unsigned x, int p, int n)
 {
-    const unsigned mask = ~(~0U << (unsigned)n);
-    const unsigned shift = p - n + 1;
-    return x ^ (mask << shift);
+	const unsigned mask = ~(~0U << (unsigned)n);
+	const unsigned shift = p - n + 1;
+	return x ^ (mask << shift);
 }
 
 static constexpr int BIT_FROM = 0b01010101;
@@ -15,6 +15,6 @@ static constexpr int BIT_FROM = 0b01010101;
 // others unchanged.
 int main(void)
 {
-    printf("%016b\n", invert(BIT_FROM, 1, 2));
-    return EXIT_SUCCESS;
+	printf("%016b\n", invert(BIT_FROM, 1, 2));
+	return EXIT_SUCCESS;
 }

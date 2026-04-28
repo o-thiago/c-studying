@@ -13,12 +13,12 @@ static constexpr int FAHR_OFFSET = 32;
 
 int main()
 {
-    printf("%s %s\n", FAHR_STR, CELSIUS_STR);
+	printf("%s %s\n", FAHR_STR, CELSIUS_STR);
 
-    for (int fahr = UPPER; fahr >= LOWER; fahr -= STEP) {
-	printf("%-*d %-*.1f\n", (int)strlen(FAHR_STR), fahr,
-	       (int)strlen(CELSIUS_STR), CELSIUS_RATIO * (fahr - FAHR_OFFSET));
-    }
+	for (int fahr = UPPER; fahr >= LOWER; fahr -= STEP) {
+		printf("%-*d %-*.1f\n", (int)strlen(FAHR_STR), fahr,
+			   (int)strlen(CELSIUS_STR), CELSIUS_RATIO * (fahr - FAHR_OFFSET));
+	}
 
-    return 0;
+	return 0;
 }

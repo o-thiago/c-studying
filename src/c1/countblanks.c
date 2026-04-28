@@ -3,14 +3,14 @@
 
 int main()
 {
-    int c = 0;
-    int counter = 0;
-    while ((c = getchar()) != EOF) {
-	if (c == ' ' || c == '\t' || c == '\n') {
-	    ++counter;
+	int c = 0;
+	int counter = 0;
+	while ((c = getchar()) != EOF) {
+		if (c == ' ' || c == '\t' || c == '\n') {
+			++counter;
+		}
 	}
-    }
 
-    printf("%d\n", counter);
-    return EXIT_SUCCESS;
+	printf("%d\n", counter);
+	return EXIT_SUCCESS;
 }

@@ -7,37 +7,37 @@ static constexpr int HEX_ALPHA_OFFSET = 10;
 
 static int hex_char_to_int(char c)
 {
-    c = (char)toupper((unsigned char)c);
+	c = (char)toupper((unsigned char)c);
 
-    if (isdigit((unsigned char)c)) {
-	return c - '0';
-    }
+	if (isdigit((unsigned char)c)) {
+		return c - '0';
+	}
 
-    if (c >= 'A' && c <= 'F') {
-	return c - 'A' + HEX_ALPHA_OFFSET;
-    }
+	if (c >= 'A' && c <= 'F') {
+		return c - 'A' + HEX_ALPHA_OFFSET;
+	}
 
-    return -1;
+	return -1;
 }
 
 static int htoi(const char *str)
 {
-    unsigned i = 0;
-    int res = 0;
+	unsigned i = 0;
+	int res = 0;
 
-    if (str[0] == '0' && toupper(str[1]) == 'X') {
-	i = 2;
-    }
-
-    for (; str[i] != '\0'; ++i) {
-	const int val = hex_char_to_int(str[i]);
-	if (val == -1) {
-	    break;
+	if (str[0] == '0' && toupper(str[1]) == 'X') {
+		i = 2;
 	}
-	res = (res * HEX_BASE) + val;
-    }
 
-    return res;
+	for (; str[i] != '\0'; ++i) {
+		const int val = hex_char_to_int(str[i]);
+		if (val == -1) {
+			break;
+		}
+		res = (res * HEX_BASE) + val;
+	}
+
+	return res;
 }
 
 /*
@@ -48,6 +48,6 @@ static int htoi(const char *str)
  */
 int main(void)
 {
-    printf("%d", htoi("123456789"));
-    return EXIT_SUCCESS;
+	printf("%d", htoi("123456789"));
+	return EXIT_SUCCESS;
 }

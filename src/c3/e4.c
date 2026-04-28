@@ -6,11 +6,11 @@
 
 static void reverse(char s[])
 {
-    for (unsigned i = 0, j = strlen(s) - 1; i < j; i++, j--) {
-	const char c = s[i];
-	s[i] = s[j];
-	s[j] = c;
-    }
+	for (unsigned i = 0, j = strlen(s) - 1; i < j; i++, j--) {
+		const char c = s[i];
+		s[i] = s[j];
+		s[j] = c;
+	}
 }
 
 static constexpr int DECIMAL_BASE = 10;
@@ -18,43 +18,43 @@ static constexpr int DECIMAL_BASE = 10;
 /* itoa: convert n to characters in s */
 [[maybe_unused]] static void itoa_bad(int n, char s[])
 {
-    int i = 0;
-    const int sign = n;
+	int i = 0;
+	const int sign = n;
 
-    if (n < 0) { /* record sign */
-	n = -n;	 /* make n positive */
-    }
+	if (n < 0) { /* record sign */
+		n = -n;	 /* make n positive */
+	}
 
-    i = 0;
-    do { /* generate digits in reverse order */
-	s[i++] = (char)((n % DECIMAL_BASE) + '0'); /* get next digit */
-    } while ((n /= DECIMAL_BASE) > 0); /* delete it */
+	i = 0;
+	do { /* generate digits in reverse order */
+		s[i++] = (char)((n % DECIMAL_BASE) + '0'); /* get next digit */
+	} while ((n /= DECIMAL_BASE) > 0); /* delete it */
 
-    if (sign < 0) {
-	s[i++] = '-';
-    }
+	if (sign < 0) {
+		s[i++] = '-';
+	}
 
-    s[i] = '\0';
-    reverse(s);
+	s[i] = '\0';
+	reverse(s);
 }
 
 /* itoa: convert n to characters in s */
 static void itoa(int n, char s[])
 {
-    int i = 0;
-    const int sign = n;
+	int i = 0;
+	const int sign = n;
 
-    i = 0;
-    do {
-	s[i++] = (char)(abs(n % DECIMAL_BASE) + '0');
-    } while ((n /= DECIMAL_BASE) != 0);
+	i = 0;
+	do {
+		s[i++] = (char)(abs(n % DECIMAL_BASE) + '0');
+	} while ((n /= DECIMAL_BASE) != 0);
 
-    if (sign < 0) {
-	s[i++] = '-';
-    }
+	if (sign < 0) {
+		s[i++] = '-';
+	}
 
-    s[i] = '\0';
-    reverse(s);
+	s[i] = '\0';
+	reverse(s);
 }
 
 // In a two’s complement number representation, our version of itoa does not
@@ -68,10 +68,10 @@ static void itoa(int n, char s[])
 // sign we reach unexpected behavior because the value is unrepresentable.
 int main(void)
 {
-    char buffer[BUFSIZ];
+	char buffer[BUFSIZ];
 
-    itoa(INT_MAX, buffer);
-    itoa(INT_MIN, buffer);
+	itoa(INT_MAX, buffer);
+	itoa(INT_MIN, buffer);
 
-    return EXIT_SUCCESS;
+	return EXIT_SUCCESS;
 }

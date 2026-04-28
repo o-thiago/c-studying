@@ -3,73 +3,73 @@
 
 static char special_char_to_normal(const char special_char)
 {
-    switch (special_char) {
-    case '\n':
-	return 'n';
-    case '\t':
-	return 't';
-    default:
-	return '\0';
-    }
+	switch (special_char) {
+	case '\n':
+		return 'n';
+	case '\t':
+		return 't';
+	default:
+		return '\0';
+	}
 }
 
 static char normal_char_to_special(const char normal_char)
 {
-    switch (normal_char) {
-    case 'n':
-	return '\n';
-    case 't':
-	return '\t';
-    default:
-	return '\0';
-    }
+	switch (normal_char) {
+	case 'n':
+		return '\n';
+	case 't':
+		return '\t';
+	default:
+		return '\0';
+	}
 }
 
 static void escape(const char *s, char *t)
 {
-    while (*s) {
-	switch (*s) {
-	case '\n':
-	case '\t':
-	    *t++ = '\\';
-	    *t++ = special_char_to_normal(*s);
-	    break;
-	default:
-	    *t++ = *s;
-	    break;
+	while (*s) {
+		switch (*s) {
+		case '\n':
+		case '\t':
+			*t++ = '\\';
+			*t++ = special_char_to_normal(*s);
+			break;
+		default:
+			*t++ = *s;
+			break;
+		}
+		++s;
 	}
-	++s;
-    }
-    *t = '\0';
+	*t = '\0';
 }
 
 static void escape_rev(const char *s, char *t)
 {
-    while (*s) {
-	if (*s != '\\') {
-	    *t++ = *s;
-	    continue;
+	while (*s) {
+		if (*s != '\\') {
+			*t++ = *s;
+			continue;
+		}
+
+		if (*(s + 1) == '\0') {
+			*t = '\\';
+			break;
+		}
+
+		switch (*(++s)) {
+		case 'n':
+		case 't':
+			*t++ = normal_char_to_special(*s);
+			break;
+		default:
+			*t++ = '\\';
+			*t++ = *s;
+			break;
+		}
+		++s;
 	}
 
-	if (*(s + 1) == '\0') {
-	    *t = '\\';
-	    break;
-	}
-
-	switch (*(++s)) {
-	case 'n':
-	case 't':
-	    *t++ = normal_char_to_special(*s);
-	    break;
-	default:
-	    *t++ = '\\';
-	    *t++ = *s;
-	    break;
-	}
-	++s;
-    }
-
-    *t = '\0';
+	*t = '\0';
 }
 
 // Write a function escape(s, t) that converts characters like newline and
@@ -78,14 +78,14 @@ static void escape_rev(const char *s, char *t)
 // converting escape sequences into the real characters./
 int main(void)
 {
-    char from[BUFSIZ] = "abc\ndef\t";
-    char to[BUFSIZ];
+	char from[BUFSIZ] = "abc\ndef\t";
+	char to[BUFSIZ];
 
-    escape(from, to);
-    printf("Escaped: %s\n", to);
+	escape(from, to);
+	printf("Escaped: %s\n", to);
 
-    escape_rev(to, from);
-    printf("Escaped: %s\n", from);
+	escape_rev(to, from);
+	printf("Escaped: %s\n", from);
 
-    return EXIT_SUCCESS;
+	return EXIT_SUCCESS;
 }
