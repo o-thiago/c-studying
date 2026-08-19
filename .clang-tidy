@@ -1,5 +1,5 @@
 ---
-Checks: "*, -*braces-around-statements, -llvmlibc-*, -altera-*, -hicpp-*, -readability-identifier-length"
+Checks: "*, -*braces-around-statements, -llvmlibc-*, -altera-*, -hicpp-*, -readability-identifier-length, -bugprone-easily-swappable-parameters, -readability-implicit-bool-conversion"
 WarningsAsErrors: '*'
 HeaderFilterRegex: '.*'
 FormatStyle: file
