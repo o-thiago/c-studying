@@ -7,9 +7,7 @@
 static int parse_sign(const char *s, int *i)
 {
 	const int sign = s[*i] == '-' ? -1 : 1;
-	if (s[*i] == '+' || s[*i] == '-') {
-		(*i)++;
-	}
+	if (s[*i] == '+' || s[*i] == '-') (*i)++;
 	return sign;
 }
 
@@ -21,14 +19,10 @@ static double improved_atof(const char s[])
 	double power = 1.0;
 	int i = 0;
 
-	for (i = 0; isspace(s[i]); i++) {
-		/* skip white space */
-	}
+	for (i = 0; isspace(s[i]); i++) {}
 
 	const int sign = parse_sign(s, &i);
-	for (; isdigit(s[i]); i++) {
-		val = (DECIMAL_BASE * val) + (s[i] - '0');
-	}
+	for (; isdigit(s[i]); i++) val = (DECIMAL_BASE * val) + (s[i] - '0');
 
 	if (s[i] == '.') {
 		i++;
@@ -44,9 +38,8 @@ static double improved_atof(const char s[])
 		const int exp_sign = parse_sign(s, &i);
 
 		double exp_val = 0.0;
-		for (; isdigit(s[i]); i++) {
+		for (; isdigit(s[i]); i++)
 			exp_val = (DECIMAL_BASE * exp_val) + (s[i] - '0');
-		}
 
 		val *= pow(DECIMAL_BASE, exp_sign * exp_val);
 	}
@@ -54,7 +47,7 @@ static double improved_atof(const char s[])
 	return val;
 }
 
-int main(void)
+int main()
 {
 	printf("%.2f", improved_atof("123.45e6"));
 	return EXIT_SUCCESS;

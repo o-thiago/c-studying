@@ -61,10 +61,8 @@ static unsigned int multa(const char cnh_number[CNH_LENGTH],
 				PERCENT_CONVERSION);
 		if (overtake_step) {
 			printf("de %d%%", overtake_step);
-		} else {
-			if (fputs("inicial", stdout) == EOF) {
-			};
-		}
+		} else if (fputs("inicial", stdout) == EOF) {
+		};
 		puts(" de ultrapassagem da via");
 	}
 
@@ -74,13 +72,9 @@ static unsigned int multa(const char cnh_number[CNH_LENGTH],
 static char *read_value(char buffer[], const int buffer_size,
 						const char message[])
 {
-	if (fputs(message, stdout) == EOF) {
-		return nullptr;
-	};
+	if (fputs(message, stdout) == EOF) return nullptr;
 
-	if (fflush(stdout) == EOF) {
-		return nullptr;
-	};
+	if (fflush(stdout) == EOF) return nullptr;
 
 	return fgets(buffer, buffer_size, stdin);
 }
@@ -89,11 +83,8 @@ static char *read_double(char buffer[], const char message[], double *ptr)
 {
 	char *return_value = read_value(buffer, BUFSIZ, message);
 
-	if (return_value) {
-		*ptr = strtod(buffer, nullptr);
-	} else {
-		puts("Número digitado foi inválido!");
-	}
+	if (return_value) *ptr = strtod(buffer, nullptr);
+	else puts("Número digitado foi inválido!");
 
 	return return_value;
 }
@@ -105,20 +96,15 @@ static bool is_cnh_correct_length(const char cnh_number[CNH_LENGTH])
 
 static bool is_cnh_numeric(const char cnh_number[CNH_LENGTH])
 {
-	for (int i = 0; cnh_number[i] != '\0'; ++i) {
-		if (!isdigit(cnh_number[i])) {
-			return false;
-		}
-	}
+	for (int i = 0; cnh_number[i] != '\0'; ++i)
+		if (!isdigit(cnh_number[i])) return false;
 	return true;
 }
 
 static void flush_in()
 {
 	int c = 0;
-	while ((c = getchar()) != '\n' && c != EOF) {
-		;
-	}
+	while ((c = getchar()) != '\n' && c != EOF);
 }
 
 int main(void)
@@ -153,9 +139,7 @@ int main(void)
 			}
 		}
 
-		if (strcmp(cnh_number, "0") == 0) {
-			break;
-		}
+		if (strcmp(cnh_number, "0") == 0) break;
 
 		if (!is_cnh_correct_length(cnh_number) || (int)cnh_number_overflowed) {
 			printf("A CNH precisa ter necessariamente %d caracteres!\n",
@@ -166,7 +150,7 @@ int main(void)
 		if (!is_cnh_numeric(cnh_number)) {
 			puts("A CNH precisa ser composta inteiramente por digitos!");
 			continue;
-		};
+		}
 
 		if (!read_double(buffer,
 						 "Digite a velocidade do carro: ", &car_velocity)) {

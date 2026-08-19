@@ -6,11 +6,8 @@ static int strrindex(const char *s, const char *t)
 {
 	const size_t t_len = strlen(t);
 
-	for (size_t i = strlen(s) - t_len + 1; i-- > 0;) {
-		if (strncmp(&s[i], t, t_len) == 0) {
-			return (int)i;
-		}
-	};
+	for (size_t i = strlen(s) - t_len + 1; i-- > 0;)
+		if (strncmp(&s[i], t, t_len) == 0) return (int)i;
 
 	return -1;
 }

@@ -23,11 +23,8 @@ int main()
 		}
 	}
 
-	if (0 < max_len) {
-		printf("Longest line: %s\n", longest_line);
-	} else {
-		puts("No line was found.");
-	}
+	if (0 < max_len) printf("Longest line: %s\n", longest_line);
+	else puts("No line was found.");
 
 	return EXIT_SUCCESS;
 }
@@ -42,9 +39,7 @@ int read_line(void)
 		current_line[i] = (char)c;
 	}
 
-	if (c == '\n') {
-		current_line[i++] = (char)c;
-	}
+	if (c == '\n') current_line[i++] = (char)c;
 
 	current_line[i] = '\0';
 
@@ -53,7 +48,5 @@ int read_line(void)
 
 void copy(void)
 {
-	for (int i = 0; (longest_line[i] = current_line[i]) != '\0'; i++) {
-		;
-	}
+	for (int i = 0; (longest_line[i] = current_line[i]) != '\0'; i++) {}
 }

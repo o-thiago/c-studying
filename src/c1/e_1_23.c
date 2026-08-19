@@ -22,11 +22,8 @@ static void handle_normal(const int c, enum ReadState *state)
 		*state = AlmostComment;
 		return;
 	}
-	if (c == CHAR_MARKER) {
-		*state = InChar;
-	} else if (c == STRING_MARKER) {
-		*state = InString;
-	}
+	if (c == CHAR_MARKER) *state = InChar;
+	else if (c == STRING_MARKER) *state = InString;
 	putchar(c);
 }
 
@@ -39,9 +36,7 @@ static bool handle_almost_comment(const int c, enum ReadState *state)
 	} else {
 		*state = Normal;
 		putchar(SLASH);
-		if (ungetc(c, stdin) == EOF) {
-			return false;
-		}
+		if (ungetc(c, stdin) == EOF) return false;
 	}
 	return true;
 }
@@ -56,18 +51,13 @@ static void handle_single_comment(const int c, enum ReadState *state)
 
 static void handle_multi_comment(const int c, enum ReadState *state)
 {
-	if (c == STAR) {
-		*state = AlmostEndMultilineComment;
-	}
+	if (c == STAR) *state = AlmostEndMultilineComment;
 }
 
 static void handle_almost_end(const int c, enum ReadState *st)
 {
-	if ('/' == c) {
-		*st = Normal;
-	} else if (c != STAR) {
-		*st = InMultilineComment;
-	}
+	if ('/' == c) *st = Normal;
+	else if (c != STAR) *st = InMultilineComment;
 }
 
 static void handle_string_char(const int c, enum ReadState *state,
@@ -104,9 +94,7 @@ int main(void)
 			break;
 
 		case AlmostComment:
-			if (!handle_almost_comment(c, &state)) {
-				return EXIT_FAILURE;
-			}
+			if (!handle_almost_comment(c, &state)) return EXIT_FAILURE;
 			break;
 
 		case InSingleLineComment:
@@ -128,9 +116,7 @@ int main(void)
 		}
 	}
 
-	if (state == AlmostComment) {
-		putchar(SLASH);
-	}
+	if (state == AlmostComment) putchar(SLASH);
 
 	return EXIT_SUCCESS;
 }

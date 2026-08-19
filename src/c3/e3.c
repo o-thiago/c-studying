@@ -10,9 +10,7 @@
 		}
 
 		++s1; // SKIPS: '-'.
-		while (c < *s1) {
-			*s2++ = c++;
-		}
+		while (c < *s1) *s2++ = c++;
 	}
 	*s2 = '\0';
 }
@@ -21,4 +19,7 @@
 // the string s1 into the equivalent complete list abc...xyz in s2. Allow for
 // letters of either case and digits, and be prepared to handle cases like a-b-c
 // and a-z0−9 and -a-z. Arrange that a leading or trailing - is taken literally.
-int main(void) { return EXIT_SUCCESS; }
+int main(void)
+{
+	return EXIT_SUCCESS;
+}

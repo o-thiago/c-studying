@@ -4,3 +4,4 @@ bin
 build
 cmake*
 compile_commands.json
+.idea

@@ -5,7 +5,7 @@
 
 static void reverse(char s[])
 {
-	for (unsigned i = 0, j = strlen(s) - 1; i < j; i++, j--) {
+	for (unsigned long i = 0, j = strlen(s) - 1; i < j; i++, j--) {
 		const char c = s[i];
 		s[i] = s[j];
 		s[j] = c;
@@ -16,18 +16,12 @@ static void blank_pad_left(char s[], const size_t min_width,
 						   const size_t capacity)
 {
 	const size_t size = strlen(s);
-	if (size >= min_width || min_width >= capacity) {
-		return;
-	}
+	if (size >= min_width || min_width >= capacity) return;
 
 	const size_t padding_size = min_width - size;
-	for (size_t i = size + 1; i-- > 0;) {
-		s[i + padding_size] = s[i];
-	}
+	for (size_t i = size + 1; i-- > 0;) s[i + padding_size] = s[i];
 
-	for (size_t i = 0; i < padding_size; ++i) {
-		s[i] = ' ';
-	}
+	for (size_t i = 0; i < padding_size; ++i) s[i] = ' ';
 }
 
 /* itoa: convert n to characters in s */
@@ -37,16 +31,14 @@ static void itoa(const int n, char s[], const size_t min_width)
 
 	int i = 0;
 	const int sign = n;
-	unsigned n_unsigned = (n < 0) ? -n : n;
+	unsigned n_unsigned = (n < 0) ? -(unsigned)n : (unsigned)n;
 
 	i = 0;
 	do {
 		s[i++] = (char)((n_unsigned % DECIMAL_BASE) + '0');
 	} while ((n_unsigned /= DECIMAL_BASE) != 0);
 
-	if (sign < 0) {
-		s[i++] = '-';
-	}
+	if (sign < 0) s[i++] = '-';
 
 	s[i] = '\0';
 

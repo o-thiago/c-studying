@@ -6,14 +6,14 @@
 
 static void reverse(char s[])
 {
-	for (unsigned i = 0, j = strlen(s) - 1; i < j; i++, j--) {
+	for (unsigned long i = 0, j = strlen(s) - 1; i < j; i++, j--) {
 		const char c = s[i];
 		s[i] = s[j];
 		s[j] = c;
 	}
 }
 
-static constexpr int DECIMAL_BASE = 10;
+static constexpr int decimal_base = 10;
 
 /* itoa: convert n to characters in s */
 [[maybe_unused]] static void itoa_bad(int n, char s[])
@@ -21,18 +21,15 @@ static constexpr int DECIMAL_BASE = 10;
 	int i = 0;
 	const int sign = n;
 
-	if (n < 0) { /* record sign */
-		n = -n;	 /* make n positive */
-	}
+	if (n < 0)	/* record sign */
+		n = -n; /* make n positive */
 
 	i = 0;
 	do { /* generate digits in reverse order */
-		s[i++] = (char)((n % DECIMAL_BASE) + '0'); /* get next digit */
-	} while ((n /= DECIMAL_BASE) > 0); /* delete it */
+		s[i++] = (char)((n % decimal_base) + '0'); /* get next digit */
+	} while ((n /= decimal_base) > 0); /* delete it */
 
-	if (sign < 0) {
-		s[i++] = '-';
-	}
+	if (sign < 0) s[i++] = '-';
 
 	s[i] = '\0';
 	reverse(s);
@@ -46,12 +43,10 @@ static void itoa(int n, char s[])
 
 	i = 0;
 	do {
-		s[i++] = (char)(abs(n % DECIMAL_BASE) + '0');
-	} while ((n /= DECIMAL_BASE) != 0);
+		s[i++] = (char)(abs(n % decimal_base) + '0');
+	} while ((n /= decimal_base) != 0);
 
-	if (sign < 0) {
-		s[i++] = '-';
-	}
+	if (sign < 0) s[i++] = '-';
 
 	s[i] = '\0';
 	reverse(s);

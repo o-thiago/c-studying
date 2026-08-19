@@ -14,9 +14,9 @@
 
 int main(void)
 {
-	LIMITS(char, "%d", "%u");
-	LIMITS(short, "%d", "%u");
-	LIMITS(int, "%d", "%u");
-	LIMITS(long, "%ld", "%lu");
+	LIMITS(char, "%d", "%u")
+	LIMITS(short, "%d", "%u")
+	LIMITS(int, "%d", "%u")
+	LIMITS(long, "%ld", "%lu")
 	return 0;
 }

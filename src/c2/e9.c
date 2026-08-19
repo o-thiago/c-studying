@@ -24,6 +24,6 @@ static constexpr int BIT_FROM = 0b01010101;
 // be 0, therefore deleted.
 int main(void)
 {
-	printf("%d", bitcount(BIT_FROM));
+	printf("%ud", bitcount(BIT_FROM));
 	return EXIT_SUCCESS;
 }

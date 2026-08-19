@@ -39,8 +39,8 @@ static bool handle_mismatch(const char c)
 	return false;
 }
 
-static bool handle_normal(const int c, const int prev, ParserState *st,
-						  TokenType *stack, int *top)
+static bool handle_normal(const int c, ParserState *st, TokenType *stack,
+						  int *top, const int prev)
 {
 	switch (c) {
 	case TOK_DQUOTE:
@@ -50,33 +50,23 @@ static bool handle_normal(const int c, const int prev, ParserState *st,
 		*st = IN_CHAR;
 		break;
 	case TOK_SLASH:
-		if (prev == TOK_SLASH) {
-			*st = IN_LINE_COMMENT;
-		}
+		if (prev == TOK_SLASH) *st = IN_LINE_COMMENT;
 		break;
 	case TOK_STAR:
-		if (prev == TOK_SLASH) {
-			*st = IN_BLOCK_COMMENT;
-		}
+		if (prev == TOK_SLASH) *st = IN_BLOCK_COMMENT;
 		break;
 	case TOK_LPAREN:
 	case TOK_LBRACE:
 	case TOK_LBRACKET:
-		if (*top + 1 >= STACK_SIZE) {
-			return false;
-		}
+		if (*top + 1 >= STACK_SIZE) return false;
 		stack[++(*top)] = (TokenType)c;
 		break;
 	case TOK_RPAREN:
 	case TOK_RBRACE:
 	case TOK_RBRACKET:
-		if (*top == -1) {
+		if (*top == -1) return handle_mismatch((char)c);
+		if (!is_match(stack[(*top)--], (TokenType)c))
 			return handle_mismatch((char)c);
-		};
-
-		if (!is_match(stack[(*top)--], (TokenType)c)) {
-			return handle_mismatch((char)c);
-		}
 
 		break;
 	default:
@@ -88,30 +78,22 @@ static bool handle_normal(const int c, const int prev, ParserState *st,
 
 static void handle_string(const int c, const int prev, ParserState *st)
 {
-	if (c == TOK_DQUOTE && prev != TOK_ESCAPE) {
-		*st = NORMAL;
-	}
+	if (c == TOK_DQUOTE && prev != TOK_ESCAPE) *st = NORMAL;
 }
 
 static void handle_char(const int c, const int prev, ParserState *st)
 {
-	if (c == TOK_SQUOTE && prev != TOK_ESCAPE) {
-		*st = NORMAL;
-	}
+	if (c == TOK_SQUOTE && prev != TOK_ESCAPE) *st = NORMAL;
 }
 
 static void handle_block_comment(const int c, const int prev, ParserState *st)
 {
-	if (prev == TOK_STAR && c == TOK_SLASH) {
-		*st = NORMAL;
-	}
+	if (prev == TOK_STAR && c == TOK_SLASH) *st = NORMAL;
 }
 
 static void handle_line_comment(const int c, ParserState *st)
 {
-	if (c == TOK_NEWLINE) {
-		*st = NORMAL;
-	}
+	if (c == TOK_NEWLINE) *st = NORMAL;
 }
 
 int main(void)
@@ -126,9 +108,7 @@ int main(void)
 	while ((c = getchar()) != EOF) {
 		switch (st) {
 		case NORMAL:
-			if (!handle_normal(c, prev, &st, stack, &top)) {
-				return EXIT_FAILURE;
-			}
+			if (!handle_normal(c, &st, stack, &top, prev)) return EXIT_FAILURE;
 			break;
 		case IN_STRING:
 			handle_string(c, prev, &st);
@@ -147,7 +127,7 @@ int main(void)
 	}
 
 	if (top != -1) {
-		printf("Error: Unclosed '%c'\n", stack[top]);
+		printf("Error: Unclosed '%uc'\n", stack[top]);
 		return EXIT_FAILURE;
 	}
 

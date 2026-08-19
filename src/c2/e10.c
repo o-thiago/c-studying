@@ -3,9 +3,8 @@
 
 static void lower(char *str)
 {
-	for (char *p = str; *p != '\0'; ++p) {
+	for (char *p = str; *p != '\0'; ++p)
 		*p += (*p >= 'A' && *p <= 'Z') ? 'a' - 'A' : 0;
-	}
 }
 
 int main(void)

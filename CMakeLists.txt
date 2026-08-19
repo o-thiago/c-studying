@@ -30,6 +30,10 @@ add_compile_options(
     -Wno-c++20-compat
     -Wno-c++20-compat-pedantic
     -Wno-declaration-after-statement
+    -Wno-unsafe-buffer-usage
+    -Wno-used-but-marked-unused
+    -Wno-switch-default
+    -Wno-padded
 )
 
 # Find all .c files
