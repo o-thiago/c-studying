@@ -34,6 +34,7 @@ add_compile_options(
     -Wno-used-but-marked-unused
     -Wno-switch-default
     -Wno-padded
+    -Wno-disabled-macro-expansion
 )
 
 # Find all .c files
