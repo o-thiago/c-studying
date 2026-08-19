@@ -9,33 +9,35 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(BIN_DIR ${CMAKE_CURRENT_BINARY_DIR}/bin)
 
-# Strict Clang compiler warnings with -Weverything (excluding pre-C23 and C++ compatibility warnings)
-add_compile_options(
-    -O2
-    -Weverything
-    -Wno-pre-c23-compat
-    -Wno-pre-c23-compat-pedantic
-    -Wno-pre-c11-compat
-    -Wno-pre-c11-compat-pedantic
-    -Wno-c99-compat
-    -Wno-c++-compat
-    -Wno-c++98-compat
-    -Wno-c++98-compat-pedantic
-    -Wno-c++11-compat
-    -Wno-c++11-compat-pedantic
-    -Wno-c++14-compat
-    -Wno-c++14-compat-pedantic
-    -Wno-c++17-compat
-    -Wno-c++17-compat-pedantic
-    -Wno-c++20-compat
-    -Wno-c++20-compat-pedantic
-    -Wno-declaration-after-statement
-    -Wno-unsafe-buffer-usage
-    -Wno-used-but-marked-unused
-    -Wno-switch-default
-    -Wno-padded
-    -Wno-disabled-macro-expansion
-)
+if (CMAKE_C_COMPILER_ID MATCHES "Clang")
+    # Strict Clang compiler warnings with -Weverything (excluding pre-C23 and C++ compatibility warnings)
+    add_compile_options(
+        -O2
+        -Weverything
+        -Wno-pre-c23-compat
+        -Wno-pre-c23-compat-pedantic
+        -Wno-pre-c11-compat
+        -Wno-pre-c11-compat-pedantic
+        -Wno-c99-compat
+        -Wno-c++-compat
+        -Wno-c++98-compat
+        -Wno-c++98-compat-pedantic
+        -Wno-c++11-compat
+        -Wno-c++11-compat-pedantic
+        -Wno-c++14-compat
+        -Wno-c++14-compat-pedantic
+        -Wno-c++17-compat
+        -Wno-c++17-compat-pedantic
+        -Wno-c++20-compat
+        -Wno-c++20-compat-pedantic
+        -Wno-declaration-after-statement
+        -Wno-unsafe-buffer-usage
+        -Wno-used-but-marked-unused
+        -Wno-switch-default
+        -Wno-padded
+        -Wno-disabled-macro-expansion
+    )
+endif ()
 
 # Find all .c files
 file(GLOB_RECURSE SRCS RELATIVE ${SRC_DIR} "${SRC_DIR}/*.c")

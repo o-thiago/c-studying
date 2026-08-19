@@ -17,6 +17,7 @@
               clang-tools
               cmake
               ninja
+              gcc
             ];
             env = {
               CC = "clang";
