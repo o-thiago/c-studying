@@ -15,9 +15,10 @@
           devShells.default = pkgs.mkShell {
             packages = with pkgs; [
               clang-tools
-              gcc
+              clang
               cmake
             ];
+            env.LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [ pkgs.stdenv.cc.cc.lib ];
           };
         };
     };

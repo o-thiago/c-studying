@@ -1,5 +1,6 @@
-Checks: "*,
-  -readability-identifier-length,
-  -altera-*,
-  -llvmlibc-restrict-system-libc-headers,
-  -bugprone-easily-swappable-parameters"
+---
+Checks: "*, -*braces-around-statements, -llvmlibc-*, -altera-*, -hicpp-*, -readability-identifier-length"
+WarningsAsErrors: '*'
+HeaderFilterRegex: '.*'
+FormatStyle: file
+...

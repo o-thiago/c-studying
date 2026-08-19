@@ -1,15 +1,31 @@
 CompileFlags:
   Add:
-    [
-      -std=c23,
-      -Wall,
-      -Wextra,
-      -Wpedantic,
-      -Wshadow,
-      -Wformat=2,
-      -Wstrict-prototypes,
-      -Wold-style-definition,
-      -Wmissing-prototypes,
-      -Wwrite-strings,
-      -Wcast-qual
-    ]
+    - -std=c23
+    - -Weverything
+    - -Wno-pre-c23-compat
+    - -Wno-pre-c23-compat-pedantic
+    - -Wno-pre-c11-compat
+    - -Wno-pre-c11-compat-pedantic
+    - -Wno-c99-compat
+    - -Wno-c++-compat
+    - -Wno-c++98-compat
+    - -Wno-c++98-compat-pedantic
+    - -Wno-c++11-compat
+    - -Wno-c++11-compat-pedantic
+    - -Wno-c++14-compat
+    - -Wno-c++14-compat-pedantic
+    - -Wno-c++17-compat
+    - -Wno-c++17-compat-pedantic
+    - -Wno-c++20-compat
+    - -Wno-c++20-compat-pedantic
+    - -Wno-declaration-after-statement
+
+Diagnostics:
+  UnusedIncludes: Strict
+  MissingIncludes: Strict
+
+InlayHints:
+  Designators: true
+  Enabled: true
+  ParameterNames: true
+  DeducedTypes: true
