@@ -7,13 +7,9 @@ int main()
 {
 	int c = 0;
 	while ((c = getchar()) != EOF) {
-		if (c == '\t') {
-			for (int i = 0; i < TAB_STOP; i++) {
-				putchar(' ');
-			}
-		} else {
-			putchar(c);
-		}
+		if (c == '\t')
+			for (int i = 0; i < TAB_STOP; i++) putchar(' ');
+		else putchar(c);
 	}
 	return EXIT_SUCCESS;
 }

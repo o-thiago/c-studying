@@ -14,7 +14,7 @@ static int strrindex(const char *s, const char *t)
 
 // Write the function strrindex(s,t), which returns the position of the
 // rightmost occurrence of t in s, or −1 if there is none.
-int main(void)
+int main()
 {
 	char out[BUFSIZ] = {0};
 	strrindex("uwu", out);

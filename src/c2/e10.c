@@ -7,7 +7,7 @@ static void lower(char *str)
 		*p += (*p >= 'A' && *p <= 'Z') ? 'a' - 'A' : 0;
 }
 
-int main(void)
+int main()
 {
 	char s[] = "ABCDEFG";
 	lower(s);

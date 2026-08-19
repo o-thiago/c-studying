@@ -16,7 +16,7 @@ static bool is_palindrome(const char *s)
 }
 
 // Check if a string is a palindrome without relying on the stdlib.
-int main(void)
+int main()
 {
 	char to_check[] = "miau";
 

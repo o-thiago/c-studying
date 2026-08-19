@@ -44,7 +44,7 @@ static size_t set_union_with_repetition(const math_set *a, const math_set *b,
 static void read_int_set(char *buffer, math_set *set);
 static void output_set(const math_set *set);
 
-int main(void)
+int main()
 {
 	constexpr size_t array_size = 10;
 	constexpr size_t out_array_size = array_size * 2;

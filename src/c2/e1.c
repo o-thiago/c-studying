@@ -12,7 +12,7 @@
 		printf("unsigned " #T ": 0 to " fmt_u "\n\n", u);                      \
 	}
 
-int main(void)
+int main()
 {
 	LIMITS(char, "%d", "%u")
 	LIMITS(short, "%d", "%u")

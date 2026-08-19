@@ -5,11 +5,8 @@
 static int any(const char *s1, const char *s2)
 {
 	for (int i = 0; s1[i] != '\0'; ++i) {
-		for (int j = 0; s2[j] != '\0'; ++j) {
-			if (s1[i] == s2[j]) {
-				return i;
-			}
-		}
+		for (int j = 0; s2[j] != '\0'; ++j)
+			if (s1[i] == s2[j]) return i;
 	}
 	return -1;
 }
@@ -18,7 +15,7 @@ static int any(const char *s1, const char *s2)
 // s1 where any character from the string s2 occurs, or −1 if s1 contains no
 // characters from s2. (The standard library function strpbrk does the same job
 // but returns a pointer to the location.)
-int main(void)
+int main()
 {
 	printf("%d\n", any("uwu", "w"));
 	printf("%d\n", any("uwu", "wu"));

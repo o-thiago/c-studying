@@ -14,16 +14,14 @@ static void squeeze(char *s1, const char *s2)
 				break;
 			}
 		}
-		if (!must_delete) {
-			s1[k++] = s1[i];
-		}
+		if (!must_delete) s1[k++] = s1[i];
 	}
 	s1[k] = '\0';
 }
 
 // Write an alternate version of squeeze(s1,s2) that deletes each character in
 // s1 that matches any character in the string s2.
-int main(void)
+int main()
 {
 	char squeezed[] = "abcdefghijkl";
 	squeeze(squeezed, "abc");

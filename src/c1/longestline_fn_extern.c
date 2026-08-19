@@ -8,8 +8,8 @@ static char current_line[MAX_INPUT_SIZE], longest_line[MAX_INPUT_SIZE];
 static int max_len;
 // NOLINTEND(cppcoreguidelines-avoid-non-const-global-variables)
 
-static int read_line(void);
-static void copy(void);
+static int read_line();
+static void copy();
 
 int main()
 {
@@ -29,7 +29,7 @@ int main()
 	return EXIT_SUCCESS;
 }
 
-int read_line(void)
+int read_line()
 {
 	int c = 0;
 	int i = 0;
@@ -46,7 +46,7 @@ int read_line(void)
 	return i;
 }
 
-void copy(void)
+void copy()
 {
 	for (int i = 0; (longest_line[i] = current_line[i]) != '\0'; i++) {}
 }

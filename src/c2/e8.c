@@ -16,7 +16,7 @@ static constexpr int BIT_FROM = 0b01010101;
 
 // Write a function rightrot(x,n) that returns the value of the integer x
 // rotated to the right by n bit positions.
-int main(void)
+int main()
 {
 	printf("%016ub\n", rightrot(BIT_FROM, 4));
 	return EXIT_SUCCESS;

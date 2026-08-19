@@ -61,7 +61,7 @@ static void itoa(int n, char s[])
 // ANSWER: Because in a two-complements system, the absolute value of INT_MIN is
 // exactly one unit more than the value of INT_MAX, when we try to remove the
 // sign we reach unexpected behavior because the value is unrepresentable.
-int main(void)
+int main()
 {
 	char buffer[BUFSIZ];
 

@@ -24,7 +24,7 @@ static bool read_matrix(char *input, int *matrix, size_t rows, size_t cols)
 	return true;
 }
 
-int main(void)
+int main()
 {
 	char input[BUFSIZ];
 	int arr[array_size * array_size] = {};

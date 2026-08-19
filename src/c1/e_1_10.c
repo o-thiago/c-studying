@@ -28,9 +28,7 @@ int main()
 			continue;
 		}
 
-		if (fputs(replacing_char, stdout) == EOF) {
-			return EXIT_FAILURE;
-		}
+		if (fputs(replacing_char, stdout) == EOF) return EXIT_FAILURE;
 	}
 
 	return EXIT_SUCCESS;

@@ -89,7 +89,7 @@ struct [[maybe_unused]] program_state {
 	bool loaded_current_user;
 };
 
-static void output_program_menu(void);
+static void output_program_menu();
 static void output_zodiac_calendar(const struct zodiac_descriptor *descriptors);
 
 static bool warn_not_registered_user(bool registered_user);
@@ -129,7 +129,7 @@ static const char *zodiac_sign_get_name(enum zodiac_sign zodiac_sign);
 
 static bool try_read_int(char *buffer, size_t buffer_size, int *out_value);
 
-int main(void)
+int main()
 {
 	struct program_state state = {0};
 	char input_buffer[BUFSIZ];
@@ -152,7 +152,7 @@ int main(void)
 	return EXIT_SUCCESS;
 }
 
-static void output_program_menu(void)
+static void output_program_menu()
 {
 	static const char *options[option_count] = {
 		"Carregar calendário de horóscopos", "Exibir calendário de horóscopos",

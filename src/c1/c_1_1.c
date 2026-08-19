@@ -3,7 +3,7 @@
 static constexpr unsigned int MAX_DIGITS = 10;
 
 /* count digits, white space, others */
-int main(void)
+int main()
 {
 	unsigned int nwhite = 0;
 	unsigned int nother = 0;

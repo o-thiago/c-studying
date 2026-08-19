@@ -15,7 +15,7 @@ static bool ask(const char *question)
 	return ((toupper)((unsigned char)*p) == 'S');
 }
 
-static const char *solve_mammal(void)
+static const char *solve_mammal()
 {
 	if (ask("quadrupede")) {
 		if (ask("carnivoro")) return "leao";
@@ -30,7 +30,7 @@ static const char *solve_mammal(void)
 	return nullptr;
 }
 
-static const char *solve_bird(void)
+static const char *solve_bird()
 {
 	if (ask("nao-voador")) {
 		if (ask("tropical")) return "avestruz";
@@ -41,7 +41,7 @@ static const char *solve_bird(void)
 	return nullptr;
 }
 
-static const char *solve_reptile(void)
+static const char *solve_reptile()
 {
 	if (ask("com casco")) return "tartaruga";
 	if (ask("carnivoro")) return "crocodilo";
@@ -49,7 +49,7 @@ static const char *solve_reptile(void)
 	return nullptr;
 }
 
-static const char *solve(void)
+static const char *solve()
 {
 	if (ask("mamifero")) return solve_mammal();
 	if (ask("ave")) return solve_bird();
@@ -57,7 +57,7 @@ static const char *solve(void)
 	return nullptr;
 }
 
-int main(void)
+int main()
 {
 	const char *result = solve();
 

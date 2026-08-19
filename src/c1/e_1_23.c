@@ -81,7 +81,7 @@ static void handle_string_char(const int c, enum ReadState *state,
 	}
 }
 
-int main(void)
+int main()
 {
 	int c = 0;
 	bool escaped = false;

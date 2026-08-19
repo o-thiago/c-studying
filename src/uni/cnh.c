@@ -107,7 +107,7 @@ static void flush_in()
 	while ((c = getchar()) != '\n' && c != EOF);
 }
 
-int main(void)
+int main()
 {
 	char cnh_number[CNH_LENGTH];
 	char buffer[BUFSIZ];

@@ -22,7 +22,7 @@ static constexpr int BIT_FROM = 0b01010101;
 // always comparing two different lsb, either 0 or 1, which in turn always
 // is 0. So all the values will end up unchanged except the lsb which will
 // be 0, therefore deleted.
-int main(void)
+int main()
 {
 	printf("%ud", bitcount(BIT_FROM));
 	return EXIT_SUCCESS;

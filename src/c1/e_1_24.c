@@ -96,7 +96,7 @@ static void handle_line_comment(const int c, ParserState *st)
 	if (c == TOK_NEWLINE) *st = NORMAL;
 }
 
-int main(void)
+int main()
 {
 	int c = 0;
 	int prev = 0;

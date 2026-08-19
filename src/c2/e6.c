@@ -27,7 +27,7 @@ static constexpr unsigned int BITS_Y = 0b1010101010U;
 /// Write a function setbits(x,p,n,y) that returns x with the n bits that begin
 /// at position p set to the rightmost n bits of y, leaving the other bits
 /// unchanged.
-int main(void)
+int main()
 {
 	printf("%016b\n", (int)setbits(BITS_X, 1U, 2U, BITS_Y));
 	return EXIT_SUCCESS;

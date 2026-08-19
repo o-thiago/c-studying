@@ -8,21 +8,14 @@ int main()
 {
 	int c = 0;
 	int char_frequency[CHAR_COUNTS];
-	for (int i = 0; i < CHAR_COUNTS; ++i) {
-		char_frequency[i] = 0;
-	}
+	for (int i = 0; i < CHAR_COUNTS; ++i) char_frequency[i] = 0;
 
-	while ((c = getchar()) != EOF) {
-		if (isalpha(c)) {
-			++char_frequency[c - 'a'];
-		}
-	}
+	while ((c = getchar()) != EOF)
+		if (isalpha(c)) ++char_frequency[c - 'a'];
 
 	for (int i = 0; i < CHAR_COUNTS; i++) {
 		printf("%c: ", 'a' + i);
-		for (int j = 0; j < char_frequency[i]; j++) {
-			putchar('*');
-		}
+		for (int j = 0; j < char_frequency[i]; j++) putchar('*');
 		putchar('\n');
 	}
 
